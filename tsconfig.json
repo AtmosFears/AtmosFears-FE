@@ -1,21 +1,43 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "baseUrl": "./",
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "removeComments": true,
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "vitest/globals", "@testing-library/jest-dom"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "paths": {
+      "@assets": ["src/assets/*"],
+      "@components": ["src/components/*"],
+      "@core": ["src/core/*"],
+      "@modules": ["src/modules/*"],
+      "@store": ["src/store/*"]
+    }
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "vite.config.ts",
+    "vitest.config.ts",
+    "tests.setup.ts",
+    ".eslintrc"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

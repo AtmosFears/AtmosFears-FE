@@ -1,0 +1,11 @@
+node_modules/
+public/
+
+.prettierrc.js
+.eslintrc.js
+vite.config.ts
+vitest.config.ts
+postcss.config.cjs
+tailwind.config.cjs
+
+*.d.ts
