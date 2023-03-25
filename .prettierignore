@@ -1,0 +1,31 @@
+# dependencies
+node_modules/
+packages/*/node_modules
+*.swp
+
+# testing
+/coverage
+
+# production
+packages/*/build
+packages/*/junit.xml
+
+# misc
+.DS_Store
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+.idea/
+.vscode/
+credstash.log
+.yarn/cache
+libraries/shared/.yarn/cache
+libraries/shared/.yarn/install-state.gz
+.yarn/install-state.gz
+apps/borrower/dist
+
+*.d.ts
+*.tsbuildinfo
+.yarnrc.yml
