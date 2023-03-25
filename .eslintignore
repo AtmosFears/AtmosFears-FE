@@ -3,6 +3,7 @@ public/
 
 .prettierrc.js
 .eslintrc.js
+index.html
 vite.config.ts
 vitest.config.ts
 postcss.config.cjs
