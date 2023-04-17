@@ -1,31 +1,25 @@
 import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import PropTypes from 'prop-types';
-import React from 'react';
 import { Circle, Marker } from 'react-leaflet';
 
-import './CircleComponent.scss';
+interface CircleComponentProps {
+  center: [number, number]
+  radius: number
+  text: string
+  color: string
+}
 
-function CircleComponent({ center, radius, text, color }) {
-  const text1 = L.divIcon({ className: 'icon', html: text });
+function CircleComponent({ center, radius, text, color }: CircleComponentProps) {
+  const text1 = L.divIcon({ className: 'text-2xl font-bold', html: text });
 
   return (
     <Circle
       center={center}
       radius={radius}
       fillColor={color}
-      color={color}
-      className='circle'>
+      color={color}>
       <Marker position={center} icon={text1} />
     </Circle>
   );
 }
-
-CircleComponent.propTypes = {
-  center: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
-  radius: PropTypes.number.isRequired,
-  text: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired
-};
 
 export default CircleComponent;
