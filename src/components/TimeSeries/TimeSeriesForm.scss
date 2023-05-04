@@ -1,0 +1,19 @@
+.timeSeriesForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+
+.submitButton {
+  padding: 10px;
+  margin: 10px 20px;
+  background-color: #cbcfd0;
+  border-radius: 4px;
+}
+
+.submitButton:hover {
+  background-color: #b8bfc0;
+  cursor: pointer;
+}
