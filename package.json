@@ -12,7 +12,8 @@
     "lint:fix": "eslint . --fix",
     "test": "vitest",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "start": "npm run dev"
   },
   "dependencies": {
     "date-fns": "^2.29.3",

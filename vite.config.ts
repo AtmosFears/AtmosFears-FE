@@ -10,9 +10,6 @@ export default defineConfig({
     tsconfigPaths({
       projects: ['./tsconfig.json']
     }),
-    eslint({
-      fix: true
-    }),
     react()
   ],
   resolve: {
