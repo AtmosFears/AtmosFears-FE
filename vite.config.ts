@@ -10,11 +10,12 @@ export default defineConfig({
     tsconfigPaths({
       projects: ['./tsconfig.json']
     }),
+    react(),
     eslint({
       fix: true
-    }),
-    react()
+    })
   ],
+
   resolve: {
     alias: {
       '@assets': '/src/assets/',
