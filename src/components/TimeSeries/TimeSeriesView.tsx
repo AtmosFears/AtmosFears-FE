@@ -1,16 +1,9 @@
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
 
-const renderLineChart = data => (
-  <LineChart width={600} height={300} data={data}>
-    <Line type='monotone' dataKey='pm10' stroke='#8884d8' />
-    <CartesianGrid stroke='#ccc' />
-    <XAxis dataKey='date' />
-    <YAxis />
-  </LineChart>
-);
+import type { TimeSeriesData } from './TimeSeriesTypes';
 
 interface Props {
-  chartData: any;
+  chartData: TimeSeriesData;
 }
 
 function TimeSeriesView(props: Props) {
@@ -18,7 +11,27 @@ function TimeSeriesView(props: Props) {
 
   let chart;
   if (chartData !== null) {
-    chart = renderLineChart(chartData);
+    const { data, lines } = chartData;
+
+    const linesComponent = lines.map(line => (
+      <Line
+        type='monotone'
+        dataKey={line.dataKey}
+        stroke={line.stroke}
+        yAxisId={line.yAxisId}
+        key={line.dataKey}
+      />
+    ));
+
+    chart = (
+      <LineChart width={600} height={300} data={data}>
+        {linesComponent}
+        <CartesianGrid stroke='#ccc' />
+        <XAxis dataKey='date' />
+        <YAxis yAxisId='left-axis' />
+        <YAxis yAxisId='right-axis' orientation='right' />
+      </LineChart>
+    );
   }
 
   return (
