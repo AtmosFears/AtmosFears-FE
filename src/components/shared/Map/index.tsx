@@ -1,10 +1,11 @@
-import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import CircleComponent from './CircleComponent';
+import { MapContainer, TileLayer } from 'react-leaflet';
 
-function MapComponent() {
+import CircleComponent from './MapPointer';
+
+export default function Map() {
   return (
-    <MapContainer center={[50.05, 19.93]} zoom={12.5} className='w-screen h-screen'>
+    <MapContainer center={[50.05, 19.93]} zoom={12.5} className='h-full w-full'>
       <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
       <CircleComponent
         center={[50.05, 19.93]}
@@ -15,5 +16,3 @@ function MapComponent() {
     </MapContainer>
   );
 }
-
-export default MapComponent;

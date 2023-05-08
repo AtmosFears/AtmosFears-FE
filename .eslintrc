@@ -34,6 +34,7 @@
     "import/extensions": "off",
     "react/require-default-props": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
-    "@typescript-eslint/indent": "off"
+    "@typescript-eslint/indent": "off",
+    "multiline-ternary": "off"
   }
 }

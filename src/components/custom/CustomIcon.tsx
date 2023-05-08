@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 
 import { PATHS } from '@/constants';
 
-import CircularLoader from '../shared/loaders/CircularLoader';
-
 interface CustomIconProps {
   name: string;
   className?: string;
@@ -28,7 +26,7 @@ export default function CustomIcon({ name, className = '' }: CustomIconProps) {
       });
   }, [name]);
 
-  if (loading) return <CircularLoader />;
+  if (loading) return null; // TODO - add some loading indicator
   if (!importedIconRef.current) return null; // TODO - return some placeholder icon
   return <importedIconRef.current className={`w-8 h-8 ${className}`} />;
 }

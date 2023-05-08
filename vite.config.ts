@@ -11,9 +11,9 @@ export default defineConfig({
     tsconfigPaths({
       projects: ['./tsconfig.json']
     }),
-    // eslint({
-    //   fix: true
-    // }),
+    eslint({
+      fix: true
+    }),
     svgr(),
     react()
   ],
