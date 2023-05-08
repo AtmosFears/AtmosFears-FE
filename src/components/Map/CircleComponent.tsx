@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 import L from 'leaflet';
 import { useRef } from 'react';
 import { Circle, Marker, Popup } from 'react-leaflet';
@@ -22,11 +21,10 @@ function CircleComponent({
   sensorData
 }: CircleComponentProps) {
   const circleRef = useRef<L.Circle>(null);
-  const text1 = L.divIcon({ className: 'text-2xl font-bold', html: text });
-
-  const onClick = () => {
-    circleRef.current?.openPopup();
-  };
+  const text1 = L.divIcon({
+    className: 'text-2xl font-bold',
+    html: text
+  });
 
   return (
     <Circle
@@ -34,9 +32,12 @@ function CircleComponent({
       radius={radius}
       fillColor={color}
       color={color}
-      ref={circleRef}
-      eventHandlers={{ click: onClick }}>
-      <Marker position={center} icon={text1} />
+      ref={circleRef}>
+      <Marker
+        position={center}
+        icon={text1}
+        eventHandlers={{ click: () => circleRef.current?.openPopup() }}
+      />
       <Popup>
         <PopupComponent sensorData={sensorData} />
       </Popup>

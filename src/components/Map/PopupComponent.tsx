@@ -21,8 +21,9 @@ function PopupComponent({ sensorData }: PopupComponentProps) {
         </thead>
         <tbody>
           {sensorData.data.map((item, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <tr key={index}>
+            // TODO - add id as key if id comes from API, or leave name if it is unique -
+            // to be determined after we get data from API
+            <tr key={item.name}>
               <td className='border px-4 py-2'>{item.name}</td>
               <td className='border px-4 py-2'>{item.value}</td>
             </tr>
