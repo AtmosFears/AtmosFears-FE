@@ -1,10 +1,9 @@
-import './App.scss';
-import MapComponent from './components/Map/MapComponent';
+import NavBar from './core/NavBar';
 
 function App() {
   return (
     <div className='App'>
-      <MapComponent />
+      <NavBar />
     </div>
   );
 }
