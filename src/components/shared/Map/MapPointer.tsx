@@ -1,11 +1,12 @@
 import L from 'leaflet';
 import { useRef } from 'react';
 import { Circle, Marker, Popup } from 'react-leaflet';
-import { type SensorData } from 'src/models/SensorData';
 
-import PopupComponent from './PopupComponent';
+import { type SensorData } from '@/types/models/SensorData';
 
-interface CircleComponentProps {
+import PointerPopup from './PointerPopup';
+
+interface MapPointerProps {
   center: [number, number];
   radius: number;
   text: string;
@@ -13,13 +14,13 @@ interface CircleComponentProps {
   sensorData: SensorData;
 }
 
-function CircleComponent({
+function MapPointer({
   center,
   radius,
   text,
   color,
   sensorData
-}: CircleComponentProps) {
+}: MapPointerProps) {
   const circleRef = useRef<L.Circle>(null);
   const text1 = L.divIcon({
     className: 'text-2xl font-bold',
@@ -39,10 +40,10 @@ function CircleComponent({
         eventHandlers={{ click: () => circleRef.current?.openPopup() }}
       />
       <Popup>
-        <PopupComponent sensorData={sensorData} />
+        <PointerPopup sensorData={sensorData} />
       </Popup>
     </Circle>
   );
 }
 
-export default CircleComponent;
+export default MapPointer;
