@@ -5,6 +5,7 @@ import CircleComponent from './MapPointer';
 
 export default function Map() {
   return (
+    // TODO - fix map container overlapping navbar flyout
     <MapContainer center={[50.05, 19.93]} zoom={12.5} className='h-full w-full'>
       <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
       <CircleComponent
