@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import eslint from 'vite-plugin-eslint';
+import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 import react from '@vitejs/plugin-react';
@@ -10,19 +11,16 @@ export default defineConfig({
     tsconfigPaths({
       projects: ['./tsconfig.json']
     }),
-    react(),
     eslint({
       fix: true
-    })
+    }),
+    svgr(),
+    react()
   ],
 
   resolve: {
     alias: {
-      '@assets': '/src/assets/',
-      '@components': '/src/components/',
-      '@core': '/src/core/',
-      '@modules': '/src/modules/',
-      '@store': '/src/store/'
+      '@/*': '/src/*'
     }
   }
 });

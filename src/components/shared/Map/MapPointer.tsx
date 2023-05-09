@@ -1,11 +1,12 @@
 import L from 'leaflet';
 import { useRef } from 'react';
 import { Circle, Marker, Popup } from 'react-leaflet';
-import { type SensorData } from 'src/models/SensorData';
 
-import PopupComponent from './PopupComponent';
+import { type SensorData } from '@/types/models/SensorData';
 
-interface CircleComponentProps {
+import PointerPopup from './PointerPopup';
+
+interface MapPointerProps {
   center: [number, number];
   radius: number;
   text: string;
@@ -50,12 +51,7 @@ function colorCircle(sensorData: SensorData, pollutionName: string): string {
   return color;
 }
 
-function CircleComponent({
-  center,
-  radius,
-  text,
-  sensorData
-}: CircleComponentProps) {
+function MapPointer({ center, radius, text, sensorData }: MapPointerProps) {
   const circleRef = useRef<L.Circle>(null);
   const text1 = L.divIcon({
     className: 'text-2xl font-bold',
@@ -66,8 +62,8 @@ function CircleComponent({
     <Circle
       center={center}
       radius={radius}
-      fillColor={colorCircle(sensorData, 'PM2.5')}
-      color={colorCircle(sensorData, 'PM2.5')}
+      fillColor={colorCircle(sensorData, 'PM10')}
+      color={colorCircle(sensorData, 'PM10')}
       ref={circleRef}>
       <Marker
         position={center}
@@ -75,10 +71,10 @@ function CircleComponent({
         eventHandlers={{ click: () => circleRef.current?.openPopup() }}
       />
       <Popup>
-        <PopupComponent sensorData={sensorData} />
+        <PointerPopup sensorData={sensorData} />
       </Popup>
     </Circle>
   );
 }
 
-export default CircleComponent;
+export default MapPointer;

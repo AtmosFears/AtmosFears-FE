@@ -25,11 +25,7 @@
     "types": ["node", "vitest/globals", "@testing-library/jest-dom"],
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "paths": {
-      "@assets": ["src/assets/*"],
-      "@components": ["src/components/*"],
-      "@core": ["src/core/*"],
-      "@modules": ["src/modules/*"],
-      "@store": ["src/store/*"]
+      "@/*": ["src/*"]
     }
   },
   "include": [

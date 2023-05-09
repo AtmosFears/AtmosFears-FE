@@ -19,16 +19,23 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "@typescript-eslint/semi": ["warn", "always"],
-    "@typescript-eslint/space-before-function-paren": ["warn", "never"],
+    "@typescript-eslint/semi": ["error", "always"],
+    "@typescript-eslint/space-before-function-paren": ["error", "never"],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/member-delimiter-style": "off",
-    "arrow-parens": ["warn", "as-needed"],
-    "import/no-extraneous-dependencies": ["warn", { "devDependencies": true }],
-    "jsx-quotes": ["warn", "prefer-single"],
+    "arrow-parens": ["error", "as-needed"],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "jsx-quotes": ["error", "prefer-single"],
     "react/button-has-type": "off",
     "react/jsx-closing-bracket-location": "off",
     "react/jsx-one-expression-per-line": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "import/prefer-default-export": "off",
+    "import/extensions": "off",
+    "react/require-default-props": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/indent": "off",
+    "multiline-ternary": "off",
+    "@typescript-eslint/consistent-type-definitions": "off"
   }
 }

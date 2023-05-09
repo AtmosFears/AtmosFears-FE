@@ -1,16 +1,13 @@
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer } from 'react-leaflet';
 
-import CircleComponent from './CircleComponent';
+import MapPointer from './MapPointer';
 
-function MapComponent() {
+export default function Map() {
   return (
-    <MapContainer
-      center={[50.05, 19.93]}
-      zoom={12.5}
-      className='w-screen h-screen'>
+    <MapContainer center={[50.05, 19.93]} zoom={12.5} className='w-full h-full'>
       <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-      <CircleComponent
+      <MapPointer
         center={[50.05, 19.93]}
         radius={20}
         text='21'
@@ -37,5 +34,3 @@ function MapComponent() {
     </MapContainer>
   );
 }
-
-export default MapComponent;

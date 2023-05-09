@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from '@testing-library/react';
 
-import App from '../App';
+import App from '../Root';
 
 // Example tests
 describe('App', () => {
