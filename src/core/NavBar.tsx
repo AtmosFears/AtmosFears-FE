@@ -47,6 +47,11 @@ export default function NavBar() {
             </Link>
           </li>
           <li>
+            <Link to='time-series'>
+              <MdSsidChart className='w-7 h-7 text-white' />
+            </Link>
+          </li>
+          <li>
             <Link to='wind-rose'>
               <CustomIcon name='wind-rose' className='w-8 h-8 fill-white' />
             </Link>
