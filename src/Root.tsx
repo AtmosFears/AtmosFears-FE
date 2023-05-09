@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 
 import NavBar from './core/NavBar';
 
-function App() {
+export default function Root() {
   return (
     <div className='flex h-screen'>
       <NavBar />
@@ -12,5 +12,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

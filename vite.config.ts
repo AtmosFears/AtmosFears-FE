@@ -17,6 +17,7 @@ export default defineConfig({
     svgr(),
     react()
   ],
+
   resolve: {
     alias: {
       '@/*': '/src/*'
