@@ -1,10 +1,10 @@
-import { type SensorData } from 'src/models/SensorData';
+import { type SensorData } from '@/types/models/SensorData';
 
-interface PopupComponentProps {
+interface PointerPopupProps {
   sensorData: SensorData;
 }
 
-function PopupComponent({ sensorData }: PopupComponentProps) {
+export default function PointerPopup({ sensorData }: PointerPopupProps) {
   return (
     <div className='text-center'>
       <h3 className='text-xl font-bold'>{sensorData.name}</h3>
@@ -20,7 +20,7 @@ function PopupComponent({ sensorData }: PopupComponentProps) {
           </tr>
         </thead>
         <tbody>
-          {sensorData.data.map((item, index) => (
+          {sensorData.data.map(item => (
             // TODO - add id as key if id comes from API, or leave name if it is unique -
             // to be determined after we get data from API
             <tr key={item.name}>
@@ -33,5 +33,3 @@ function PopupComponent({ sensorData }: PopupComponentProps) {
     </div>
   );
 }
-
-export default PopupComponent;
