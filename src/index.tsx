@@ -21,6 +21,7 @@ import './scss/main.scss';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Root />} errorElement={<ErrorPage />}>
+      <Route index element={<SpatialAirVisPage />} />
       <Route path='map' element={<SpatialAirVisPage />} />
       <Route path='cal' element={<ModCalPage />} />
       <Route path='time-series' element={<TimeSeriesPage />} />

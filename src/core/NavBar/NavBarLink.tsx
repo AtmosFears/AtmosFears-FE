@@ -33,9 +33,9 @@ export default function NavBarLink({
         return (
           <>
             <div
-              className={`flex-center w-full h-full bg-gray-700 transition-all overflow-hidden hover:bg-gray-800 ${
-                isActive ? 'bg-gray-800' : ''
-              } ${expanded ? 'rounded-lg' : 'rounded-full'}`}>
+              className={`flex-center w-full h-full 0 transition-all overflow-hidden hover:bg-gray-800 ${
+                isActive ? 'bg-gray-800' : 'bg-gray-70'
+              } ${expanded ? 'rounded-lg' : 'rounded-[100%]'}`}>
               <div
                 className={`w-12 h-12 flex-center transition-all ${
                   isActive
