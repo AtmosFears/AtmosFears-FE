@@ -1,4 +1,4 @@
-import { type SensorLocation } from '../../models/SensorLocation';
+import { type SensorLocation } from '../../types/models/SensorLocation';
 
 // eslint-disable-next-line import/prefer-default-export
 export const mappings: [SensorLocation] = [

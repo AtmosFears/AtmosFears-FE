@@ -1,7 +1,7 @@
 export interface SensorData {
   date: Date;
   data: AirImpurityData[];
-  name: string;
+  code: string;
 }
 
 export interface AirImpurityData {
