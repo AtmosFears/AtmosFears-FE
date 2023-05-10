@@ -1,3 +1,5 @@
+import TimeSeriesComponent from '@/components/TimeSeries/TimeSeriesComponent';
+
 export default function TimeSeriesPage() {
-  return <p>TimeSeriesPage</p>; // TODO - implement
+  return <TimeSeriesComponent />;
 }

@@ -46,6 +46,7 @@ function TimeSeriesForm(props: Props) {
 
   useEffect(() => {
     axios
+      // TODO: Load data from the API
       .get<StationsResponse>('https://atmosfears.free.beeceptor.com/stations')
       .then(({ data }) => {
         const { stations } = data;
@@ -64,7 +65,6 @@ function TimeSeriesForm(props: Props) {
 
   return (
     <div>
-      <h1>Time Series Form</h1>
       <form onSubmit={handleSubmit(fetchData)} className='timeSeriesForm'>
         {isError && <p>Something went wrong</p>}
         <p>Date from</p>

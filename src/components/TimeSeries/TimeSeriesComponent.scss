@@ -1,8 +1,19 @@
 .row {
+  padding-top: 16px;
   display: flex;
   flex: 1;
 }
 
-.column {
-  flex: 50%;
+.column-left {
+  flex: 25%;
+}
+
+.header {
+    font-size: 1.5em;
+    text-align: center;
+    color: #000000;
+}
+
+.column-right {
+  flex: 75%;
 }

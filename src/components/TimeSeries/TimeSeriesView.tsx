@@ -34,12 +34,7 @@ function TimeSeriesView(props: Props) {
     );
   }
 
-  return (
-    <div className='chartView'>
-      <h1>Time Series View</h1>
-      {chart}
-    </div>
-  );
+  return <div className='chartView'>{chart}</div>;
 }
 
 export default TimeSeriesView;
