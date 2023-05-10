@@ -4,7 +4,10 @@ import { Circle, Marker, Popup } from 'react-leaflet';
 
 import { type SensorData } from '@/types/models/SensorData';
 
+import { COLORS, LEVELS } from '../../../constants/index';
 import PointerPopup from './PointerPopup';
+
+type PollutionType = 'PM2.5' | 'PM10';
 
 interface MapPointerProps {
   center: [number, number];
@@ -13,32 +16,23 @@ interface MapPointerProps {
   sensorData: SensorData;
 }
 
-const colors = ['#6ebc2a', '#c4d83f', '#ffe500', '#f1aa41', '#b91414'];
-
-type PollutionLevels = Array<{
-  name: string;
-  values: number[];
-}>;
-
-const pollutionLevels: PollutionLevels = [
-  {
-    name: 'PM10',
-    values: [0, 40, 80, 120, 300]
-  },
-  {
-    name: 'PM2.5',
-    values: [0, 25, 50, 100, 300]
-  }
-];
-
-function getCircleColor(sensorData: SensorData, pollutionName: PollutionType): string {
-  let color: string = '#909090';
+function getCircleColor(
+  sensorData: SensorData,
+  pollutionName: PollutionType
+): string {
   if (pollutionName != null) {
     const pollutionValue = sensorData.data.find(
       item => item.name === pollutionName
     );
-    const idx = pollutionLevels[pollutionName].find(threshold => pollutionValue.value < threshold);
-    return COLORS.pollutionScale[idx];
+    if (pollutionValue != null) {
+      const thresholds = (LEVELS as any)[pollutionName];
+      const idx = thresholds.findIndex(
+        (threshold: number) => pollutionValue.value < threshold
+      );
+      return (COLORS as any)[idx];
+    }
+  }
+  return (COLORS as any)[-1];
 }
 
 function MapPointer({ center, radius, text, sensorData }: MapPointerProps) {
@@ -48,12 +42,13 @@ function MapPointer({ center, radius, text, sensorData }: MapPointerProps) {
     html: text
   });
 
+  const circleColor = getCircleColor(sensorData, 'PM10');
   return (
     <Circle
       center={center}
       radius={radius}
-      fillColor={colorCircle(sensorData, 'PM10')}
-      color={colorCircle(sensorData, 'PM10')}
+      fillColor={circleColor}
+      color={circleColor}
       ref={circleRef}>
       <Marker
         position={center}
