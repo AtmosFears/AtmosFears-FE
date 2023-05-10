@@ -31,7 +31,7 @@ const pollutionLevels: PollutionLevels = [
   }
 ];
 
-function colorCircle(sensorData: SensorData, pollutionName: string): string {
+function getCircleColor(sensorData: SensorData, pollutionName: PollutionType): string {
   let color: string = '#909090';
   if (pollutionName != null) {
     const pollutionValue = sensorData.data.find(
