@@ -37,18 +37,8 @@ function getCircleColor(sensorData: SensorData, pollutionName: PollutionType): s
     const pollutionValue = sensorData.data.find(
       item => item.name === pollutionName
     );
-    const scale = pollutionLevels.find(item => item.name === pollutionName);
-    if (pollutionValue != null && scale != null) {
-      for (let i = 0; i < scale.values.length; i += 1) {
-        const treshold = scale.values[i];
-        if (treshold != null && pollutionValue.value < treshold) {
-          break;
-        }
-        color = colors[i] ?? '#909090';
-      }
-    }
-  }
-  return color;
+    const idx = pollutionLevels[pollutionName].find(threshold => pollutionValue.value < threshold);
+    return COLORS.pollutionScale[idx];
 }
 
 function MapPointer({ center, radius, text, sensorData }: MapPointerProps) {
