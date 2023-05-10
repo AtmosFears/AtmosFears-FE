@@ -1,9 +1,8 @@
-import { type SensorData } from '../../models/SensorData';
+import { type SensorData } from '@/types/models/SensorData';
 
-// eslint-disable-next-line import/prefer-default-export
 export const data: [SensorData] = [
   {
-    name: 'MpKrakAlKras',
+    code: 'MpKrakAlKras',
     date: new Date(),
     data: [
       {

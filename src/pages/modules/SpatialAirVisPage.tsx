@@ -1,6 +1,8 @@
 import MapComponent from '@/components/shared/Map';
+import { getRecent } from '@/services/DataService';
 
 // TODO - implement
 export default function SpatialAirVisPage() {
-  return <MapComponent />;
+  const recentData = getRecent();
+  return <MapComponent sensorData={recentData} />;
 }
