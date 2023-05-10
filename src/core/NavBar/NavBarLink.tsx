@@ -30,10 +30,13 @@ export default function NavBarLink({
           }, 0);
         }
 
+        const containerClass =
+          'flex-center w-full h-full transition-all overflow-hidden hover:bg-gray-800';
+
         return (
           <>
             <div
-              className={`flex-center w-full h-full 0 transition-all overflow-hidden hover:bg-gray-800 ${
+              className={`${containerClass} ${
                 isActive ? 'bg-gray-800' : 'bg-gray-70'
               } ${expanded ? 'rounded-lg' : 'rounded-[100%]'}`}>
               <div
