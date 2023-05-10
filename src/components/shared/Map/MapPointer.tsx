@@ -4,7 +4,7 @@ import { Circle, Marker, Popup } from 'react-leaflet';
 
 import { type SensorData } from '@/types/models/SensorData';
 
-import { COLORS, LEVELS } from '../../../constants/index';
+import { COLORS, LEVELS } from '@/constants/index';
 import PointerPopup from './PointerPopup';
 
 type PollutionType = 'PM2.5' | 'PM10';
