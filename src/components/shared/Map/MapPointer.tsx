@@ -14,7 +14,7 @@ interface MapPointerProps {
   sensorData: SensorData;
 }
 
-function MapPointer({
+export default function MapPointer({
   center,
   radius,
   text,
@@ -45,5 +45,3 @@ function MapPointer({
     </Circle>
   );
 }
-
-export default MapPointer;

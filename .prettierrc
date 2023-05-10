@@ -6,5 +6,8 @@
   "arrowParens": "avoid",
   "importOrder": ["^@\\w+/(.*)$", "^@/\\w+/?(.*)$", "^[./]"],
   "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "importOrderSortSpecifiers": true,
+  "rules": {
+    "prettier/prettier": [true, { "singleQuote": true, "tabWidth": 2 }]
+  }
 }
