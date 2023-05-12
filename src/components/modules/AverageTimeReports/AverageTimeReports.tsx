@@ -3,15 +3,15 @@ import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { type AirQuality } from '@/components/modules/AverageTimeReports/types';
 import data from '@/mocks/avg-data.json';
+import { AirQuality } from '@/types/models/AirQuality';
 
 type FormValues = {
   dateFrom: string;
   dateTo: string;
 };
 
-const DATE_FORMAT = 'YYYY-MM-DD';
+const DATE_FORMAT = 'yyyy-MM-dd';
 
 function AverageTimeReports() {
   const { register, handleSubmit, formState } = useForm<FormValues>({
