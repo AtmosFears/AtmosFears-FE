@@ -1,4 +1,4 @@
-.timeSeriesForm {
+.time-series-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,14 +6,14 @@
   margin: 20px;
 }
 
-.submitButton {
+.submit-button {
   padding: 10px;
   margin: 10px 20px;
   background-color: #cbcfd0;
   border-radius: 4px;
 }
 
-.submitButton:hover {
+.submit-button:hover {
   background-color: #b8bfc0;
   cursor: pointer;
 }

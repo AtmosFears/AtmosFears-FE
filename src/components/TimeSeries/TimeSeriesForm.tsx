@@ -65,7 +65,7 @@ function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(fetchData)} className='timeSeriesForm'>
+      <form onSubmit={handleSubmit(fetchData)} className='time-series-form'>
         {isError && <p>Something went wrong</p>}
         <p>Date from</p>
         <input type='date' {...register('dateFrom')} />
@@ -81,7 +81,7 @@ function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
         <select {...register('stations', { required: true })} multiple>
           {renderStations}
         </select>
-        <input className='submitButton' type='submit' />
+        <input className='submit-button' type='submit' />
       </form>
     </div>
   );
