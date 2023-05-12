@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import axios from 'axios';
-import moment from 'moment';
+import { format, subDays } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -15,7 +15,7 @@ interface TimeSeriesFormProps {
   setChartData: (data: TimeSeriesResponse) => void;
 }
 
-const DATE_FORMAT = 'YYYY-MM-DD';
+const DATE_FORMAT = 'yyyy-MM-dd';
 
 function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
   const [stationsList, setStationsList] = useState<Station[]>([]);
@@ -23,8 +23,8 @@ function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      dateFrom: moment().format(DATE_FORMAT),
-      dateTo: moment().add(7, 'days').format(DATE_FORMAT),
+      dateFrom: format(subDays(new Date(), 7), DATE_FORMAT),
+      dateTo: format(new Date(), DATE_FORMAT),
       types: ['PM2-5']
     }
   });
