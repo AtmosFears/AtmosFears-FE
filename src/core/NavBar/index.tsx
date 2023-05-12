@@ -43,7 +43,7 @@ export default function NavBar() {
 
   return (
     <nav
-      className={`w-20 h-screen bg-white dark:bg-gray-900 drop-shadow-xl py-8 flex flex-col justify-between gap-8 transition-all ${
+      className={`fixed z-20 top-0 left-0 bottom-0 w-20 dark:bg-gray-900 drop-shadow-xl py-8 flex flex-col justify-between gap-8 transition-all ${
         open ? 'w-80' : ''
       }`}>
       <section className='flex flex-col gap-16 w-full'>

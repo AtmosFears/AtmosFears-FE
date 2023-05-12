@@ -4,9 +4,9 @@ import NavBar from './core/NavBar';
 
 export default function Root() {
   return (
-    <div className='flex h-screen'>
+    <div className='h-screen'>
       <NavBar />
-      <main className='grow'>
+      <main className='relative ml-20 h-screen z-0'>
         <Outlet />
       </main>
     </div>
