@@ -1,16 +1,13 @@
+import { type SensorData } from '@/types/models/SensorData';
+
 export interface SensorLocation {
   code: string;
-  N: number;
-  E: number;
+  n: number;
+  e: number;
 }
 
-export class SensorLocationClass implements SensorLocation {
-  E: number;
-  N: number;
-  code: string;
-  constructor(code: string, N: number, E: number) {
-    this.code = code;
-    this.N = N;
-    this.E = E;
-  }
+export interface SensorLocationData {
+  key: number;
+  location: SensorLocation;
+  data: SensorData;
 }

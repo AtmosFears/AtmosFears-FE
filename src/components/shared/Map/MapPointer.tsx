@@ -26,7 +26,6 @@ export default function MapPointer({
     className: 'text-2xl font-bold',
     html: text
   });
-
   return (
     <Circle
       center={center}
