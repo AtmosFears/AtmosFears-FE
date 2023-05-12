@@ -1,7 +1,9 @@
+// TODO: Fix eslint errors
+
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import axios from 'axios';
 import { format, subDays } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import './TimeSeriesForm.scss';
