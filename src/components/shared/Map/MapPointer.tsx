@@ -2,9 +2,9 @@ import L from 'leaflet';
 import { useRef } from 'react';
 import { Circle, Marker, Popup } from 'react-leaflet';
 
+import { COLORS, POLLUTION } from '@/constants/index';
 import { type SensorData } from '@/types/models/SensorData';
 
-import { COLORS, LEVELS } from '@/constants/index';
 import PointerPopup from './PointerPopup';
 
 type PollutionType = 'PM2.5' | 'PM10';
@@ -16,23 +16,21 @@ interface MapPointerProps {
   sensorData: SensorData;
 }
 
-function getCircleColor(
+function getPollutionScaleColor(
   sensorData: SensorData,
   pollutionName: PollutionType
 ): string {
-  if (pollutionName != null) {
-    const pollutionValue = sensorData.data.find(
-      item => item.name === pollutionName
+  const pollutionValue = sensorData.data.find(
+    item => item.name === pollutionName
+  );
+  if (pollutionValue !== undefined) {
+    const thresholds = POLLUTION.pollutionLevels[pollutionName];
+    const idx = thresholds.findIndex(
+      (threshold: number) => pollutionValue.value < threshold
     );
-    if (pollutionValue != null) {
-      const thresholds = (LEVELS as any)[pollutionName];
-      const idx = thresholds.findIndex(
-        (threshold: number) => pollutionValue.value < threshold
-      );
-      return (COLORS as any)[idx];
-    }
+    return COLORS.pollutionScale[idx] as string;
   }
-  return (COLORS as any)[-1];
+  return '#ffffff';
 }
 
 function MapPointer({ center, radius, text, sensorData }: MapPointerProps) {
@@ -42,7 +40,7 @@ function MapPointer({ center, radius, text, sensorData }: MapPointerProps) {
     html: text
   });
 
-  const circleColor = getCircleColor(sensorData, 'PM10');
+  const circleColor = getPollutionScaleColor(sensorData, 'PM10');
   return (
     <Circle
       center={center}
