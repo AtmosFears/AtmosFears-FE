@@ -33,7 +33,12 @@ function getPollutionScaleColor(
   return '#ffffff';
 }
 
-function MapPointer({ center, radius, text, sensorData }: MapPointerProps) {
+export default function MapPointer({
+  center,
+  radius,
+  text,
+  sensorData
+}: MapPointerProps) {
   const circleRef = useRef<L.Circle>(null);
   const text1 = L.divIcon({
     className: 'text-2xl font-bold',
@@ -59,5 +64,3 @@ function MapPointer({ center, radius, text, sensorData }: MapPointerProps) {
     </Circle>
   );
 }
-
-export default MapPointer;
