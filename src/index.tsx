@@ -26,8 +26,7 @@ const router = createBrowserRouter(
       <Route path='map' element={<SpatialAirVisPage />} />
       <Route path='cal' element={<ModCalPage />} />
       <Route path='time-series' element={<TimeSeriesPage />} />
-      <Route path='average-time-reports' element={<AverageTimeReportsPage />} />
-
+      <Route path='spatial-air-vis' element={<AverageTimeReportsPage />} />
       <Route path='wind-rose' element={<WindRosePage />} />
     </Route>
   )

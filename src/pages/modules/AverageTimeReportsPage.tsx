@@ -1,5 +1,5 @@
-import AverageTimeReports from '@/components/modules/AverageTimeReports/AverageTimeReports';
+import SpatialAirVis from '@/components/modules/SpatialAirVis/SpatialAirVis';
 
 export default function AverageTimeReportsPage() {
-  return <AverageTimeReports />;
+  return <SpatialAirVis />;
 }

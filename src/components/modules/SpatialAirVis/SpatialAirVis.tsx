@@ -13,7 +13,7 @@ type FormValues = {
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 
-function AverageTimeReports() {
+function SpatialAirVis() {
   const { register, handleSubmit, formState } = useForm<FormValues>({
     defaultValues: {
       dateTo: format(Date.now(), DATE_FORMAT),
@@ -89,4 +89,4 @@ function AverageTimeReports() {
   );
 }
 
-export default AverageTimeReports;
+export default SpatialAirVis;
