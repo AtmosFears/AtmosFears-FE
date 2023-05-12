@@ -1,8 +1,7 @@
 /*eslint-disable*/
-import moment from 'moment';
+import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import styled from 'styled-components';
 
 import { type AirQuality } from '@/components/modules/AverageTimeReports/types';
 import data from '@/mocks/avg-data.json';
@@ -14,53 +13,16 @@ type FormValues = {
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-`;
-
-const StyledInput = styled.input`
-  margin-bottom: 10px;
-`;
-
-const StyledButton = styled.button`
-  margin-top: 20px;
-  margin-bottom: 20px;
-`;
-
-const StyledList = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  padding: 0;
-  margin-top: 20px;
-  width: 50%;
-  margin: auto;
-`;
-
-const StyledListItem = styled.li`
-  flex-basis: 50%;
-  padding: 5px;
-  border: 1px solid #000;
-  text-align: center;
-`;
-
-const StyledHeader = styled.h1`
-  text-align: center;
-`;
-
 function AverageTimeReports() {
   const { register, handleSubmit, formState } = useForm<FormValues>({
     defaultValues: {
-      dateTo: moment().format(DATE_FORMAT),
-      dateFrom: moment().format(DATE_FORMAT)
+      dateTo: format(Date.now(), DATE_FORMAT),
+      dateFrom: format(Date.now(), DATE_FORMAT)
     }
   });
 
   const [avgData, setAvgData] = useState<AirQuality | null>(null);
-  const [submitted, setSubmitted] = useState<boolean>(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const { errors } = formState;
 
@@ -68,34 +30,60 @@ function AverageTimeReports() {
     setAvgData(data);
   }, []);
 
-  const onSubmit = (formData: FormValues): void => {
-    // @ts-expect-error
-    const { dateFrom, dateTo } = formData;
-    // @TODO fetch from API and set to chartData
+  const onSubmit = (): void => {
+    // TODO fetch from API and set to chartData
     setSubmitted(true);
   };
 
   return (
     <div>
-      <StyledHeader>Average Time Reports</StyledHeader>
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
-        <p>Date from</p>
-        <StyledInput type='date' {...register('dateFrom')} />
-        {errors.dateFrom && <span>Start date is required</span>}
-        <p>Date to</p>
-        <StyledInput type='date' {...register('dateTo')} />
-        {errors.dateTo && <span>End date is required</span>}
-        <StyledButton type='submit'>Submit</StyledButton>
-      </StyledForm>
+      <h1 className='text-center text-3xl font-bold my-6'>
+        Average Time Reports
+      </h1>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className='flex flex-col items-center my-6'>
+        <div className='my-4'>
+          <label className='block text-gray-700 font-bold mb-2'>
+            Date from
+          </label>
+          <input
+            type='date'
+            {...register('dateFrom')}
+            className='form-input w-full'
+          />
+          {errors.dateFrom && (
+            <span className='text-red-500'>Start date is required</span>
+          )}
+        </div>
+        <div className='my-4'>
+          <label className='block text-gray-700 font-bold mb-2'>Date to</label>
+          <input
+            type='date'
+            {...register('dateTo')}
+            className='form-input w-full'
+          />
+          {errors.dateTo && (
+            <span className='text-red-500'>End date is required</span>
+          )}
+        </div>
+        <button
+          type='submit'
+          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-6'>
+          Submit
+        </button>
+      </form>
       {avgData && submitted && (
-        <StyledList>
+        <ul className='flex flex-wrap list-none p-0 m-auto w-1/2 my-6'>
           {Object.entries(avgData).map(([key, value]) => (
             <React.Fragment key={key}>
-              <StyledListItem>{key}</StyledListItem>
-              <StyledListItem>{value}</StyledListItem>
+              <li className='w-1/2 p-4 border text-center'>{key}</li>
+              <li className='w-1/2 p-4 border text-center bg-gray-200'>
+                {value}
+              </li>
             </React.Fragment>
           ))}
-        </StyledList>
+        </ul>
       )}
     </div>
   );
