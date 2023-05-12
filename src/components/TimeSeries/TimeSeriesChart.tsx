@@ -2,11 +2,11 @@ import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
 
 import type { TimeSeriesData } from '../../types/models/timeSeries';
 
-interface Props {
+interface TimeSeriesChartProps {
   chartData: TimeSeriesData;
 }
 
-function TimeSeriesView({ chartData }: Props) {
+function TimeSeriesChart({ chartData }: TimeSeriesChartProps) {
   return (
     <div className='m-4 ml-auto mr-auto'>
       {chartData != null && (
@@ -33,4 +33,4 @@ function TimeSeriesView({ chartData }: Props) {
   );
 }
 
-export default TimeSeriesView;
+export default TimeSeriesChart;
