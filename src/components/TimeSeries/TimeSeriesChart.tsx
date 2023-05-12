@@ -1,6 +1,6 @@
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
 
-import type { TimeSeriesData } from './TimeSeriesTypes';
+import type { TimeSeriesData } from '../../types/models/timeSeries';
 
 interface Props {
   chartData: TimeSeriesData;
@@ -8,9 +8,9 @@ interface Props {
 
 function TimeSeriesView({ chartData }: Props) {
   return (
-    <div className='m-4'>
+    <div className='m-4 ml-auto mr-auto'>
       {chartData != null && (
-        <LineChart width={600} height={300} data={chartData.data}>
+        <LineChart width={800} height={300} data={chartData.data}>
           {chartData.lines.map(line => (
             <Line
               type='monotone'
@@ -22,7 +22,10 @@ function TimeSeriesView({ chartData }: Props) {
           ))}
           <CartesianGrid stroke='#ccc' />
           <XAxis dataKey='date' />
-          <YAxis yAxisId='left-axis' />
+          <YAxis
+            yAxisId='left-axis'
+            label={{ value: 'µg/m3', angle: -90, position: 'insideLeft' }}
+          />
           <YAxis yAxisId='right-axis' orientation='right' />
         </LineChart>
       )}

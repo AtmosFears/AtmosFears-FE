@@ -1,17 +1,17 @@
 // TODO: Fix eslint errors
 
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import axios from 'axios';
 import { format, subDays } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import './TimeSeriesForm.scss';
+import { stations } from '../../mocks/timeseries/stations.json';
+import timeseries from '../../mocks/timeseries/timeseries.json';
 import {
   type Station,
-  type StationsResponse,
   type TimeSeriesResponse
-} from './TimeSeriesTypes';
+} from '../../types/models/timeSeries';
+import './TimeSeriesForm.scss';
 
 interface TimeSeriesFormProps {
   setChartData: (data: TimeSeriesResponse) => void;
@@ -21,41 +21,43 @@ const DATE_FORMAT = 'yyyy-MM-dd';
 
 function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
   const [stationsList, setStationsList] = useState<Station[]>([]);
-  const [isError, setIsError] = useState<boolean>(false);
+  const [isError] = useState<boolean>(false);
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
       dateFrom: format(subDays(new Date(), 7), DATE_FORMAT),
       dateTo: format(new Date(), DATE_FORMAT),
-      types: ['PM2-5']
+      types: ['PM2-5'],
+      stations: ['KRK']
     }
   });
 
   const fetchData = async (formData: FormData): Promise<void> => {
+    setChartData(timeseries);
     // TODO: Load data from the API
-    const { data } = await axios.get<TimeSeriesResponse>(
-      'https://atmosfears.free.beeceptor.com/timeseries',
-      {
-        params: formData
-      }
-    );
-    setChartData(data);
+    // const { data } = await axios.get<TimeSeriesResponse>(
+    //   'https://atmosfears.free.beeceptor.com/timeseries',
+    //   {
+    //     params: formData
+    //   }
+    // );
+    // setChartData(data);
   };
 
   useEffect(() => {
-    axios
-      // TODO: Load data from the API
-      .get<StationsResponse>('https://atmosfears.free.beeceptor.com/stations')
-      .then(({ data }) => {
-        const { stations } = data;
-        setStationsList(stations);
-      })
-      .catch(() => {
-        setIsError(true);
-      });
+    setStationsList(stations);
+    // TODO: Load data from the API
+    // axios
+    //   .get<StationsResponse>('https://atmosfears.free.beeceptor.com/stations')
+    //   .then(({ data: { stations } }) => {
+    //     setStationsList(stations);
+    //   })
+    //   .catch(() => {
+    //     setIsError(true);
+    //   });
   }, []);
 
-  const stationsComponent = stationsList.map(station => (
+  const renderStations = stationsList.map(station => (
     <option value={station.id} key={station.id}>
       {station.name}
     </option>
@@ -77,7 +79,7 @@ function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
         </select>
         <p>Station</p>
         <select {...register('stations', { required: true })} multiple>
-          {stationsComponent}
+          {renderStations}
         </select>
         <input className='submitButton' type='submit' />
       </form>

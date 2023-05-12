@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
+import type { TimeSeriesData } from '../../types/models/timeSeries';
 import './TimeSeries.scss';
 import TimeSeriesChart from './TimeSeriesChart';
 import TimeSeriesForm from './TimeSeriesForm';
-import type { TimeSeriesData } from './TimeSeriesTypes';
 
 function TimeSeries() {
   const [chartData, setChartData] = useState<TimeSeriesData>(null);
