@@ -1,5 +1,4 @@
 export interface AirQuality {
-  date: string;
   grimm_pm10: number;
   n_0044: number;
   n_0075: number;
@@ -28,6 +27,4 @@ export interface AirQuality {
   n_0140_c: number;
   n_0500_c: number;
   n_1000_c: number;
-  wday: number;
-  hour: number;
 }
