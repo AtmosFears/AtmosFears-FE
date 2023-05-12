@@ -1,21 +1,24 @@
-// TODO: Fix eslint errors
-
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { format, subDays } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { stations } from '../../mocks/timeseries/stations.json';
-import timeseries from '../../mocks/timeseries/timeseries.json';
+import { stations } from '@/mocks/timeSeries/stations.json';
+import timeSeries from '@/mocks/timeSeries/timeSeries.json';
 import {
   type Station,
   type TimeSeriesResponse
-} from '../../types/models/timeSeries';
-import './TimeSeriesForm.scss';
+} from '@/types/models/timeSeries';
 
 interface TimeSeriesFormProps {
   setChartData: (data: TimeSeriesResponse) => void;
 }
+
+type TimeSeriesFormData = {
+  dateFrom: string;
+  dateTo: string;
+  types: string[];
+  stations: string[];
+};
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 
@@ -27,13 +30,13 @@ function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
     defaultValues: {
       dateFrom: format(subDays(new Date(), 7), DATE_FORMAT),
       dateTo: format(new Date(), DATE_FORMAT),
-      types: ['PM2-5'],
+      types: ['PM2.5'],
       stations: ['KRK']
     }
   });
 
-  const fetchData = async (formData: FormData): Promise<void> => {
-    setChartData(timeseries);
+  const fetchData = async (formData: TimeSeriesFormData): Promise<void> => {
+    setChartData(timeSeries as unknown as TimeSeriesResponse);
     // TODO: Load data from the API
     // const { data } = await axios.get<TimeSeriesResponse>(
     //   'https://atmosfears.free.beeceptor.com/timeseries',
@@ -65,7 +68,11 @@ function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(fetchData)} className='time-series-form'>
+      <form
+        onSubmit={event => {
+          void handleSubmit(fetchData)(event);
+        }}
+        className='flex flex-col items-center justify-center m-1'>
         {isError && <p>Something went wrong</p>}
         <p>Date from</p>
         <input type='date' {...register('dateFrom')} />
@@ -74,14 +81,17 @@ function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
         <p>Pollution type</p>
         <select {...register('types', { required: true })} multiple>
           <option value='PM1'>PM1</option>
-          <option value='PM2-5'>PM2.5</option>
+          <option value='PM2.5'>PM2.5</option>
           <option value='PM10'>PM10</option>
         </select>
         <p>Station</p>
         <select {...register('stations', { required: true })} multiple>
           {renderStations}
         </select>
-        <input className='submit-button' type='submit' />
+        <input
+          className='p-3 mx-2 my-5 back hover:bg-slate-200 bg-slate-100 hover:cursor-pointer rounded text-slate-700'
+          type='submit'
+        />
       </form>
     </div>
   );

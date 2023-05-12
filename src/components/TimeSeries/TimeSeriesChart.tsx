@@ -1,6 +1,6 @@
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
 
-import type { TimeSeriesData } from '../../types/models/timeSeries';
+import type { TimeSeriesData } from '@/types/models/timeSeries';
 
 interface TimeSeriesChartProps {
   chartData: TimeSeriesData;
@@ -9,7 +9,7 @@ interface TimeSeriesChartProps {
 function TimeSeriesChart({ chartData }: TimeSeriesChartProps) {
   return (
     <div className='m-4 ml-auto mr-auto'>
-      {chartData != null && (
+      {chartData && (
         <LineChart width={800} height={300} data={chartData.data}>
           {chartData.lines.map(line => (
             <Line
