@@ -11,7 +11,6 @@ export default function Map() {
         center={[50.05, 19.93]}
         radius={20}
         text='21'
-        color='#c90e0e'
         sensorData={{
           date: new Date(),
           name: 'Kraków, ul. Wrocławska 20',
