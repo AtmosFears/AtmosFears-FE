@@ -1,0 +1,30 @@
+export interface AirQuality {
+  grimm_pm10: number;
+  n_0044: number;
+  n_0075: number;
+  n_0100: number;
+  n_0120: number;
+  n_0140: number;
+  n_0200: number;
+  n_0250: number;
+  n_0500: number;
+  n_0750: number;
+  n_1000: number;
+  ws: number;
+  mws: number;
+  wd: number;
+  temp: number;
+  rh: number;
+  pres: number;
+  prec: number;
+  poj_h: number;
+  n_0250_m: number;
+  n_0500_m: number;
+  n_0200_m: number;
+  n_0100_m: number;
+  n_0200_mm: number;
+  n_0075_c: number;
+  n_0140_c: number;
+  n_0500_c: number;
+  n_1000_c: number;
+}
