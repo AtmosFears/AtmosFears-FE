@@ -1,7 +1,7 @@
-/* eslint-disable react/jsx-props-no-spreading,@typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import axios from 'axios';
 import moment from 'moment';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import './TimeSeriesForm.scss';
@@ -11,17 +11,15 @@ import {
   type TimeSeriesResponse
 } from './TimeSeriesTypes';
 
-interface Props {
-  setChartData: (data: any) => void;
+interface TimeSeriesFormProps {
+  setChartData: (data: TimeSeriesResponse) => void;
 }
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
-function TimeSeriesForm(props: Props) {
-  const { setChartData } = props;
-
-  const [stationsList, setStationsList] = React.useState<Station[]>([]);
-  const [isError, setIsError] = React.useState<boolean>(false);
+function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
+  const [stationsList, setStationsList] = useState<Station[]>([]);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -31,18 +29,16 @@ function TimeSeriesForm(props: Props) {
     }
   });
 
-  function fetchData(formData): void {
-    void (async () => {
-      // TODO: Load data from the API
-      const { data } = await axios.get<TimeSeriesResponse>(
-        'https://atmosfears.free.beeceptor.com/timeseries',
-        {
-          params: formData
-        }
-      );
-      setChartData(data);
-    })();
-  }
+  const fetchData = async (formData: FormData): Promise<void> => {
+    // TODO: Load data from the API
+    const { data } = await axios.get<TimeSeriesResponse>(
+      'https://atmosfears.free.beeceptor.com/timeseries',
+      {
+        params: formData
+      }
+    );
+    setChartData(data);
+  };
 
   useEffect(() => {
     axios

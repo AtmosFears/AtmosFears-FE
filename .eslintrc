@@ -36,6 +36,7 @@
     "@typescript-eslint/strict-boolean-expressions": "off",
     "@typescript-eslint/indent": "off",
     "multiline-ternary": "off",
-    "@typescript-eslint/consistent-type-definitions": "off"
+    "@typescript-eslint/consistent-type-definitions": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }

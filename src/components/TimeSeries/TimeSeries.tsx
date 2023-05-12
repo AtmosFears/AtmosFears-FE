@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import './TimeSeriesComponent.scss';
+import './TimeSeries.scss';
+import TimeSeriesChart from './TimeSeriesChart';
 import TimeSeriesForm from './TimeSeriesForm';
 import type { TimeSeriesData } from './TimeSeriesTypes';
-import TimeSeriesView from './TimeSeriesView';
 
-function TimeSeriesComponent() {
+function TimeSeries() {
   const [chartData, setChartData] = useState<TimeSeriesData>(null);
 
   return (
@@ -16,10 +16,10 @@ function TimeSeriesComponent() {
       </div>
       <div className='column-right'>
         <h1 className='header'>Time Series View</h1>
-        <TimeSeriesView chartData={chartData} />
+        <TimeSeriesChart chartData={chartData} />
       </div>
     </div>
   );
 }
 
-export default TimeSeriesComponent;
+export default TimeSeries;
