@@ -21,7 +21,6 @@ export default function Map() {
       const data = await getRecent();
       setSensorData(data);
     });
-    return () => {};
   }, []);
 
   let i = 0;
