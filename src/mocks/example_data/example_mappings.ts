@@ -1,4 +1,4 @@
-import { type SensorLocation } from '@/types/models/SensorLocation';
+import { type SensorLocation } from '@/mocks/SensorLocation';
 
 export const mappings: [SensorLocation] = [
   {

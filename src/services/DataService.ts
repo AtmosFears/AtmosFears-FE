@@ -1,21 +1,21 @@
-import {
-  AirImpurityDataClass,
-  type SensorData,
-  SensorDataClass
-} from '@/types/models/SensorData';
+import axios from 'axios';
 
-const locationsURI = 'http://localhost:8080/sampleData';
+import { type SensorData } from '@/mocks/SensorData';
+import { AirImpurityDataModel } from '@/models/AirImpurityDataModel';
+import { SensorDataModel } from '@/models/SensorDataModel';
+
+const locationsURI = `${import.meta.env.VITE_LOCAL_API as string}/sampleData`;
 export default async function getRecent() {
-  const res = await fetch(locationsURI);
-  if (res.ok) {
+  const res = await axios.get(locationsURI);
+  if (res.status) {
     const resJSON: [
       { id: string; deviceLocation: string; pm10Quantity: number }
-    ] = await res.json();
+    ] = res.data;
     const sampleData: [SensorData] = resJSON.map(
       value =>
-        new SensorDataClass(
+        new SensorDataModel(
           value.deviceLocation,
-          [new AirImpurityDataClass('pm10Qunatity', value.pm10Quantity)],
+          [new AirImpurityDataModel('pm10Qunatity', value.pm10Quantity)],
           new Date()
         )
     );

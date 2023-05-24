@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { Circle, Marker, Popup } from 'react-leaflet';
 
 import { COLORS, POLLUTION } from '@/constants/index';
-import { type SensorData } from '@/types/models/SensorData';
+import { type SensorData } from '@/mocks/SensorData';
 
 import PointerPopup from './PointerPopup';
 

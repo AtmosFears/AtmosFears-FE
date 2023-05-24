@@ -1,4 +1,4 @@
-import { type SensorData } from '@/types/models/SensorData';
+import { type SensorData } from '@/mocks/SensorData';
 
 export const data: [SensorData] = [
   {

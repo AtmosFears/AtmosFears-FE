@@ -1,16 +1,17 @@
 import 'leaflet/dist/leaflet.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 
+import { type SensorData } from '@/mocks/SensorData';
+import { type SensorLocation } from '@/mocks/SensorLocation';
 import getRecent from '@/services/DataService';
-import { getLocation, getLocations } from '@/services/StationsService';
-import { type SensorData } from '@/types/models/SensorData';
-import {
-  type SensorLocation,
-  type SensorLocationData
-} from '@/types/models/SensorLocation';
+import { getLocations } from '@/services/StationsService';
 
 import MapPointer from './MapPointer';
+
+function getLocation(sensorCode: string, locations: SensorLocation[]) {
+  return locations.find(val => val.code === sensorCode);
+}
 
 export default function Map() {
   const [locations, setLocations] = useState<SensorLocation[]>([]);
