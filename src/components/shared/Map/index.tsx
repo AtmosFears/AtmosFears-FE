@@ -13,8 +13,8 @@ import {
 import MapPointer from './MapPointer';
 
 export default function Map() {
-  const [locations, setLocations] = useState<[SensorLocation]>([]);
-  const [sensorData, setSensorData] = useState<[SensorData]>([]);
+  const [locations, setLocations] = useState<SensorLocation[]>([]);
+  const [sensorData, setSensorData] = useState<SensorData[]>([]);
   useEffect(() => {
     void getLocations().then(async res => {
       setLocations(res);
