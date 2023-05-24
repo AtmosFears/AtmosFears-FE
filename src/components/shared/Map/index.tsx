@@ -23,17 +23,15 @@ export default function Map() {
     });
   }, []);
 
-  let i = 0;
-  const sensorLocationData: [SensorLocationData] = [];
-  sensorData.forEach((value: SensorData) => {
-    const sensorLocation: SensorLocation = getLocation(value.code, locations);
-    sensorLocationData.push({
-      data: value,
-      location: sensorLocation,
-      key: i
-    });
-    i += 1;
-  });
+  const sensorLocationData = useMemo(
+    () =>
+      sensorData.map((value: SensorData, idx) => ({
+        data: value,
+        location: getLocation(value.code, locations),
+        key: idx
+      })),
+    [locations, sensorData]
+  );
   return (
     <MapContainer center={[50.05, 19.93]} zoom={12.5} className='w-full h-full'>
       <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
