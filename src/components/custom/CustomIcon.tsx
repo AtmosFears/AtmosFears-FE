@@ -14,7 +14,7 @@ export default function CustomIcon({ name, className = '' }: CustomIconProps) {
   > | null>(null);
 
   useEffect(() => {
-    import(`${PATHS.icons}/${name}.svg`)
+    import(/* @vite-ignore */ `${PATHS.icons}/${name}.svg`)
       .then(({ ReactComponent: Icon }) => {
         importedIconRef.current = Icon;
       })

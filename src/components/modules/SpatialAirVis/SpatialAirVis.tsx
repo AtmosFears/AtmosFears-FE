@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import data from '@/mocks/avg-data.json';
-import { AirQuality } from '@/types/models/AirQuality';
+import { AirQuality } from '@/types/models/airQuality';
 
 type FormValues = {
   dateFrom: string;

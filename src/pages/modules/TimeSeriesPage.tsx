@@ -1,4 +1,4 @@
-import TimeSeries from '@/components/TimeSeries/TimeSeries';
+import TimeSeries from '@/components/modules/TimeSeries/TimeSeries';
 
 export default function TimeSeriesPage() {
   return <TimeSeries />;
