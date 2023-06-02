@@ -1,4 +1,4 @@
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
+import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from 'recharts';
 
 import type { TimeSeriesData } from '@/types/models/timeSeries';
 
@@ -20,13 +20,22 @@ function TimeSeriesChart({ chartData }: TimeSeriesChartProps) {
               key={line.dataKey}
             />
           ))}
+          <Legend verticalAlign='top' height={36} />
           <CartesianGrid stroke='#ccc' />
           <XAxis dataKey='date' />
           <YAxis
             yAxisId='left-axis'
-            label={{ value: 'µg/m3', angle: -90, position: 'insideLeft' }}
+            label={{
+              value: chartData.leftAxis.label,
+              angle: -90,
+              position: 'insideLeft'
+            }}
           />
-          <YAxis yAxisId='right-axis' orientation='right' />
+          <YAxis
+            yAxisId='right-axis'
+            orientation='right'
+            label={{ value: chartData.rightAxis?.label ?? '', angle: -90 }}
+          />
         </LineChart>
       )}
     </div>
