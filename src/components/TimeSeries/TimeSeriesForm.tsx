@@ -11,13 +11,14 @@ import type {
 } from '@/types/models/timeSeries';
 
 interface TimeSeriesFormProps {
-  setChartData: (data: TimeSeriesResponse) => void;
+  setChartData: (data: TimeSeriesResponse | null) => void;
 }
 
 type TimeSeriesFormData = {
   dateFrom: string;
   dateTo: string;
-  pollutions: string;
+  pollution1: string;
+  pollution2: string;
   sensors: string;
 };
 
@@ -39,13 +40,15 @@ function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
   const { register, handleSubmit } = useForm<TimeSeriesFormData>({
     defaultValues: {
       dateFrom: format(new Date('2021-01-01'), DATE_FORMAT),
-      dateTo: format(new Date('2021-01-02'), DATE_FORMAT),
-      pollutions: 'PM25,PM10',
+      dateTo: format(new Date('2021-01-30'), DATE_FORMAT),
+      pollution1: 'PM25',
+      pollution2: 'PM10',
       sensors: 'MpKrakAlKras'
     }
   });
 
   const fetchData = async (formData: TimeSeriesFormData): Promise<void> => {
+    setChartData(null);
     const { data } = await axios.get<TimeSeriesResponse>(
       `${BACKEND_URL}/timeseries/data`,
       {
@@ -96,19 +99,26 @@ function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
         }}
         className='flex flex-col items-center justify-center m-1'>
         {isError && <p>Something went wrong</p>}
-        <p>Date from</p>
+        <p className='mt-2 text-lg'>Date from</p>
         <input type='date' {...register('dateFrom')} />
-        <p>Date to</p>
+        <p className='mt-2 text-lg'>Date to</p>
         <input type='date' {...register('dateTo')} />
-        <p>Pollution type</p>
-        <select {...register('pollutions', { required: true })} multiple>
+        <p className='mt-2 text-lg'>Pollution types</p>
+        <select {...register('pollution1', { required: true })}>
           {pollutionTypes.map(({ value, label }) => (
             <option value={value} key={value}>
               {label}
             </option>
           ))}
         </select>
-        <p>Sensors</p>
+        <select {...register('pollution2', { required: true })}>
+          {pollutionTypes.map(({ value, label }) => (
+            <option value={value} key={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+        <p className='mt-2 text-lg'>Sensors</p>
         <select {...register('sensors', { required: true })} multiple>
           {renderSensors}
         </select>

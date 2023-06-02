@@ -4,7 +4,13 @@ export interface TimeSeriesResponse {
   leftAxis: AxisConfig;
   rightAxis?: AxisConfig;
   lines: LineConfig[];
+  stations: string[];
   data: TimeSeriesPoint[];
+}
+export interface TimeSeriesPoint {
+  date: number;
+  displayDate: string;
+  sensors: Record<string, SensorData>;
 }
 
 export interface AxisConfig {
@@ -17,10 +23,7 @@ export interface LineConfig {
   yAxisId: 'left-axis' | 'right-axis';
 }
 
-export interface TimeSeriesPoint {
-  code: number;
-  date: string;
-
+export interface SensorData {
   CO: number;
   NO2: number;
   O3: number;
