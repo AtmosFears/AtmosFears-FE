@@ -1,17 +1,38 @@
+import { COLORS } from '@/constants/index';
+
 export default function Legend() {
-  const legendData = [
-    { id: 0, color: 'red', description: 'High Risk' },
-    { id: 1, color: 'yellow', description: 'Medium Risk' },
-    { id: 2, color: 'green', description: 'Low Risk' }
+  const pollutionLevels: string[] = [
+    'Bardzo dobra',
+    'Dobra',
+    'Umiarkowana',
+    'Dostateczna',
+    'Zła',
+    'Bardzo zła',
+    'Niebezpieczna'
   ];
+  const legendData: Array<{
+    id: number;
+    color: string | undefined;
+    description: string | undefined;
+  }> = [];
+
+  for (let i = 0; i < pollutionLevels.length; i += 1) {
+    const levelData = {
+      id: i,
+      color: COLORS.pollutionScale[i],
+      description: pollutionLevels[i]
+    };
+    legendData.push(levelData);
+  }
 
   return (
-    <div className='absolute top-40 right-4 bg-black bg-opacity-25 rounded z-10'>
+    <div className='absolute top-40 right-4 bg-black bg-opacity-50 rounded z-10'>
       <table className='w-40 border-collapse'>
-        <thead>
+        <thead className='text-white font-bold'>
           <tr>
-            <th>Color</th>
-            <th>Description</th>
+            <td colSpan={2} className='text-center'>
+              Jakość powietrza
+            </td>
           </tr>
         </thead>
         <tbody>
@@ -23,7 +44,7 @@ export default function Legend() {
                   style={{ backgroundColor: item.color }}
                 />
               </td>
-              <span className='text-stroke-2 text-white'>
+              <span className='-webkit-text-stroke-2 text-white outline-4 outline-black'>
                 <td>{item.description}</td>
               </span>
             </tr>
