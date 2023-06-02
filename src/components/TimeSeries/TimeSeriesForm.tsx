@@ -65,13 +65,28 @@ function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
       .catch(() => {
         setIsError(true);
       });
-  }, []);
+  }, [isError]);
 
   const renderSensors = sensorsList.map(station => (
     <option value={station.code} key={station.code}>
       {station.name}
     </option>
   ));
+
+  if (isError) {
+    return (
+      <div className='text-center'>
+        <p>Błąd połączenia z serwerem</p>
+        <button
+          className='bg-slate-300 rounded m-1 p-2'
+          onClick={() => {
+            setIsError(false);
+          }}>
+          Spróbuj ponownie
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div>
