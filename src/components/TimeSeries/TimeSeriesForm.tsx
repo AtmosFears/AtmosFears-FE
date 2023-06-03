@@ -1,70 +1,95 @@
-import { format, subDays } from 'date-fns';
+import axios from 'axios';
+import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { stations } from '@/mocks/timeSeries/stations.json';
-import timeSeries from '@/mocks/timeSeries/timeSeries.json';
-import {
-  type Station,
-  type TimeSeriesResponse
+import { BACKEND_URL } from '@/config';
+import type {
+  Location,
+  LocationResponse,
+  TimeSeriesResponse
 } from '@/types/models/timeSeries';
 
 interface TimeSeriesFormProps {
-  setChartData: (data: TimeSeriesResponse) => void;
+  setChartData: (data: TimeSeriesResponse | null) => void;
 }
 
 type TimeSeriesFormData = {
   dateFrom: string;
   dateTo: string;
-  types: string[];
-  stations: string[];
+  pollution1: string;
+  pollution2: string;
+  sensors: string;
 };
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 
-function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
-  const [stationsList, setStationsList] = useState<Station[]>([]);
-  const [isError] = useState<boolean>(false);
+const pollutionTypes = [
+  { value: 'PM25', label: 'PM2.5' },
+  { value: 'PM10', label: 'PM10' },
+  { value: 'CO', label: 'CO' },
+  { value: 'NO2', label: 'NO2' },
+  { value: 'O3', label: 'O3' },
+  { value: 'SO2', label: 'SO2' }
+];
 
-  const { register, handleSubmit } = useForm({
+function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
+  const [sensorsList, setLocationsList] = useState<Location[]>([]);
+  const [isError, setIsError] = useState<boolean>(false);
+
+  const { register, handleSubmit } = useForm<TimeSeriesFormData>({
     defaultValues: {
-      dateFrom: format(subDays(new Date(), 7), DATE_FORMAT),
-      dateTo: format(new Date(), DATE_FORMAT),
-      types: ['PM2.5'],
-      stations: ['KRK']
+      dateFrom: format(new Date('2021-01-01'), DATE_FORMAT),
+      dateTo: format(new Date('2021-01-30'), DATE_FORMAT),
+      pollution1: 'PM25',
+      pollution2: 'PM10',
+      sensors: 'MpKrakAlKras'
     }
   });
 
   const fetchData = async (formData: TimeSeriesFormData): Promise<void> => {
-    setChartData(timeSeries as unknown as TimeSeriesResponse);
-    // TODO: Load data from the API
-    // const { data } = await axios.get<TimeSeriesResponse>(
-    //   'https://atmosfears.free.beeceptor.com/timeseries',
-    //   {
-    //     params: formData
-    //   }
-    // );
-    // setChartData(data);
+    setChartData(null);
+    const { data } = await axios.get<TimeSeriesResponse>(
+      `${BACKEND_URL}/timeseries/data`,
+      {
+        params: formData,
+        paramsSerializer: { indexes: null }
+      }
+    );
+    setChartData(data);
   };
 
   useEffect(() => {
-    setStationsList(stations);
-    // TODO: Load data from the API
-    // axios
-    //   .get<StationsResponse>('https://atmosfears.free.beeceptor.com/stations')
-    //   .then(({ data: { stations } }) => {
-    //     setStationsList(stations);
-    //   })
-    //   .catch(() => {
-    //     setIsError(true);
-    //   });
-  }, []);
+    axios
+      .get<LocationResponse>(`${BACKEND_URL}/timeseries/locations`)
+      .then(({ data: { locations } }) => {
+        setLocationsList(locations);
+      })
+      .catch(() => {
+        setIsError(true);
+      });
+  }, [isError]);
 
-  const renderStations = stationsList.map(station => (
-    <option value={station.id} key={station.id}>
+  const renderSensors = sensorsList.map(station => (
+    <option value={station.code} key={station.code}>
       {station.name}
     </option>
   ));
+
+  if (isError) {
+    return (
+      <div className='text-center'>
+        <p>Błąd połączenia z serwerem</p>
+        <button
+          className='bg-slate-300 rounded m-1 p-2'
+          onClick={() => {
+            setIsError(false);
+          }}>
+          Spróbuj ponownie
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -74,19 +99,28 @@ function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
         }}
         className='flex flex-col items-center justify-center m-1'>
         {isError && <p>Something went wrong</p>}
-        <p>Date from</p>
+        <p className='mt-2 text-lg'>Date from</p>
         <input type='date' {...register('dateFrom')} />
-        <p>Date to</p>
+        <p className='mt-2 text-lg'>Date to</p>
         <input type='date' {...register('dateTo')} />
-        <p>Pollution type</p>
-        <select {...register('types', { required: true })} multiple>
-          <option value='PM1'>PM1</option>
-          <option value='PM2.5'>PM2.5</option>
-          <option value='PM10'>PM10</option>
+        <p className='mt-2 text-lg'>Pollution types</p>
+        <select {...register('pollution1', { required: true })}>
+          {pollutionTypes.map(({ value, label }) => (
+            <option value={value} key={value}>
+              {label}
+            </option>
+          ))}
         </select>
-        <p>Station</p>
-        <select {...register('stations', { required: true })} multiple>
-          {renderStations}
+        <select {...register('pollution2', { required: true })}>
+          {pollutionTypes.map(({ value, label }) => (
+            <option value={value} key={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+        <p className='mt-2 text-lg'>Sensors</p>
+        <select {...register('sensors', { required: true })} multiple>
+          {renderSensors}
         </select>
         <input
           className='p-3 mx-2 my-5 back hover:bg-slate-200 bg-slate-100 hover:cursor-pointer rounded text-slate-700'
