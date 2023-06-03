@@ -10,23 +10,14 @@ export default function Legend() {
     'Bardzo zła',
     'Niebezpieczna'
   ];
-  const legendData: Array<{
-    id: number;
-    color: string | undefined;
-    description: string | undefined;
-  }> = [];
-
-  for (let i = 0; i < pollutionLevels.length; i += 1) {
-    const levelData = {
-      id: i,
-      color: COLORS.pollutionScale[i],
-      description: pollutionLevels[i]
-    };
-    legendData.push(levelData);
-  }
+  const legendData = pollutionLevels.map((level, i) => ({
+    id: i,
+    color: COLORS.pollutionScale[i],
+    description: level
+  }));
 
   return (
-    <div className='absolute top-40 right-4 bg-black bg-opacity-50 rounded z-10'>
+    <div className='absolute top-4 right-4 bg-black bg-opacity-50 rounded z-10'>
       <table className='w-40 border-collapse'>
         <thead className='text-white font-bold'>
           <tr>
