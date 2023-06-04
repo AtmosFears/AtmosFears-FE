@@ -1,4 +1,4 @@
-import { type AirImpurityData } from '@/mocks/SensorData';
+import { type AirImpurityData } from '@/types/sensors/sensors';
 
 export class AirImpurityDataModel implements AirImpurityData {
   name: string;

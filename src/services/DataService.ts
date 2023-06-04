@@ -1,26 +1,50 @@
 import axios from 'axios';
 
-import { type SensorData } from '@/mocks/SensorData';
-import { AirImpurityDataModel } from '@/models/AirImpurityDataModel';
-import { SensorDataModel } from '@/models/SensorDataModel';
+import { type MeasurementsResponse } from '@/types/api/measurements';
+import { type SensorData } from '@/types/sensors/sensors';
 
-const locationsURI = `${import.meta.env.VITE_LOCAL_API as string}/sampleData`;
-export default async function getRecent() {
-  const res = await axios.get(locationsURI);
-  if (res.status) {
-    const resJSON: [
-      { id: string; deviceLocation: string; pm10Quantity: number }
-    ] = res.data;
-    const sampleData: [SensorData] = resJSON.map(
-      value =>
-        new SensorDataModel(
-          value.deviceLocation,
-          [new AirImpurityDataModel('pm10Qunatity', value.pm10Quantity)],
-          new Date()
-        )
-    );
-    return sampleData;
+const measurementsURI = `${
+  import.meta.env.VITE_LOCAL_API as string
+}/data/recent`;
+
+export const getMeasurements = async (): Promise<SensorData[]> => {
+  try {
+    const res = await axios.get<MeasurementsResponse>(measurementsURI);
+    return res.data.map(value => ({
+      code: value.sensorCode,
+      date: new Date(value.date),
+      longitude: value.longitude,
+      latitude: value.latitude,
+      data: [
+        {
+          name: 'CO',
+          value: value.co
+        },
+        {
+          name: 'NO2',
+          value: value.no2
+        },
+
+        {
+          name: 'PM10',
+          value: value.pm10
+        },
+        {
+          name: 'PM25',
+          value: value.pm25
+        },
+        {
+          name: 'O3',
+          value: value.o3
+        },
+        {
+          name: 'SO2',
+          value: value.so2
+        }
+      ]
+    }));
+  } catch (error) {
+    console.error(error);
   }
-  console.log('Failed to fetch locations.');
   return [];
-}
+};

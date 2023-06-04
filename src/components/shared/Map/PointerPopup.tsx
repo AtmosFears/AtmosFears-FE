@@ -1,4 +1,4 @@
-import { type SensorData } from '@/mocks/SensorData';
+import { type SensorData } from '@/types/sensors/sensors';
 
 interface PointerPopupProps {
   sensorData: SensorData;
