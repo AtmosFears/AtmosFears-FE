@@ -1,10 +1,9 @@
-/*eslint-disable*/
 import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import data from '@/mocks/avg-data.json';
-import { AirQuality } from '@/types/models/AirQuality';
+import { type AirQuality } from '@/types/models/AirQuality';
 
 type FormValues = {
   dateFrom: string;
@@ -12,6 +11,16 @@ type FormValues = {
 };
 
 const DATE_FORMAT = 'yyyy-MM-dd';
+
+const initialAirQuality: AirQuality = {
+  location: '',
+  CO: 0,
+  NO2: 0,
+  O3: 0,
+  PM10: 0,
+  PM25: 0,
+  SO2: 0.1
+};
 
 function SpatialAirVis() {
   const { register, handleSubmit, formState } = useForm<FormValues>({
@@ -21,7 +30,7 @@ function SpatialAirVis() {
     }
   });
 
-  const [avgData, setAvgData] = useState<AirQuality | null>(null);
+  const [avgData, setAvgData] = useState<AirQuality[]>([]);
   const [submitted, setSubmitted] = useState(false);
 
   const { errors } = formState;
@@ -31,7 +40,7 @@ function SpatialAirVis() {
   }, []);
 
   const onSubmit = (): void => {
-    // TODO fetch from API and set to chartData
+    // TODO: Fetch data from API and update chartData
     setSubmitted(true);
   };
 
@@ -41,12 +50,12 @@ function SpatialAirVis() {
         Average Time Reports
       </h1>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={event => {
+          void handleSubmit(onSubmit)(event);
+        }}
         className='flex flex-col items-center my-6'>
         <div className='my-4'>
-          <label className='block text-gray-700 font-bold mb-2'>
-            Date from
-          </label>
+          <p className='text-gray-700 font-bold mb-2'>Date from</p>
           <input
             type='date'
             {...register('dateFrom')}
@@ -57,7 +66,7 @@ function SpatialAirVis() {
           )}
         </div>
         <div className='my-4'>
-          <label className='block text-gray-700 font-bold mb-2'>Date to</label>
+          <p className='text-gray-700 font-bold mb-2'>Date to</p>
           <input
             type='date'
             {...register('dateTo')}
@@ -73,17 +82,33 @@ function SpatialAirVis() {
           Submit
         </button>
       </form>
-      {avgData && submitted && (
-        <ul className='flex flex-wrap list-none p-0 m-auto w-1/2 my-6'>
-          {Object.entries(avgData).map(([key, value]) => (
-            <React.Fragment key={key}>
-              <li className='w-1/2 p-4 border text-center'>{key}</li>
-              <li className='w-1/2 p-4 border text-center bg-gray-200'>
-                {value}
-              </li>
-            </React.Fragment>
-          ))}
-        </ul>
+      {submitted && (
+        <table className='w-full border border-collapse'>
+          <thead>
+            <tr>
+              {Object.keys(initialAirQuality).map(key => (
+                <th key={key} className='border border-gray-400 px-4 py-2'>
+                  {key}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {avgData.map((row, index) => (
+              <tr
+                key={Symbol(index).toString()}
+                className={index % 2 === 1 ? 'bg-gray-200' : ''}>
+                {Object.values(row).map((value, colIndex) => (
+                  <td
+                    key={Symbol(colIndex).toString()}
+                    className='border border-gray-400 px-4 py-2'>
+                    {value}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );
