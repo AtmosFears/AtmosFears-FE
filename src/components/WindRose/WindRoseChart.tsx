@@ -1,26 +1,24 @@
 import { Chart, type ChartData } from 'react-windrose-chart';
 
-import { columns } from '@/components/WindRose/data';
+import { windroseColumns } from '@/constants/pollution';
 
-interface TimeSeriesChartProps {
-  chartData: ChartData[] | null;
+interface WindRoseChartProps {
+  chartData: ChartData[];
 }
 
-function WindRoseChart({ chartData }: TimeSeriesChartProps) {
+function WindRoseChart({ chartData }: WindRoseChartProps) {
   return (
-    <div
-      className='m-4 ml-auto mr-auto'
-      style={{
-        transform: 'translate(200px)'
-      }}>
+    <div className='m-4 flex '>
       {chartData && (
-        <Chart
-          chartData={chartData}
-          columns={columns}
-          width={800}
-          height={600}
-          responsive
-        />
+        <div className='ml-auto mr-auto'>
+          <Chart
+            chartData={chartData}
+            columns={windroseColumns}
+            width={600}
+            height={600}
+            responsive
+          />
+        </div>
       )}
     </div>
   );

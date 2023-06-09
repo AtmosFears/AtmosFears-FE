@@ -3,10 +3,11 @@ import { type Dispatch, type SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { type ChartData } from 'react-windrose-chart';
 
-import { chartData } from '@/components/WindRose/data';
+import { pollutionTypes } from '@/constants/pollution';
+import data from '@/mocks/windrose/data.json';
 
 interface WindRoseFormProps {
-  setChartData: Dispatch<SetStateAction<ChartData[] | null>>;
+  setChartData: Dispatch<SetStateAction<ChartData[]>>;
 }
 
 type WindRoseFormData = {
@@ -16,15 +17,6 @@ type WindRoseFormData = {
 };
 
 const DATE_FORMAT = 'yyyy-MM-dd';
-
-const pollutionTypes = [
-  { value: 'PM25', label: 'PM2.5' },
-  { value: 'PM10', label: 'PM10' },
-  { value: 'CO', label: 'CO' },
-  { value: 'NO2', label: 'NO2' },
-  { value: 'O3', label: 'O3' },
-  { value: 'SO2', label: 'SO2' }
-];
 
 function WindRoseForm({ setChartData }: WindRoseFormProps) {
   const [isError, setIsError] = useState<boolean>(false);
@@ -52,7 +44,7 @@ function WindRoseForm({ setChartData }: WindRoseFormProps) {
     // }catch {
     //   setIsError(true);
     // }
-    setChartData(chartData);
+    setChartData(data);
   };
 
   if (isError) {
