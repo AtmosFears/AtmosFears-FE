@@ -1,3 +1,5 @@
+import WindRose from '@/components/WindRose/WindRose';
+
 export default function WindRosePage() {
-  return <p>WindRosePage</p>; // TODO - implement
+  return <WindRose />;
 }
