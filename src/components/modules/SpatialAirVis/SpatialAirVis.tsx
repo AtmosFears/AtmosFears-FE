@@ -19,7 +19,7 @@ const initialAirQuality: AirQuality = {
   O3: 0,
   PM10: 0,
   PM25: 0,
-  SO2: 0.1
+  SO2: 0
 };
 
 function SpatialAirVis() {
@@ -96,12 +96,10 @@ function SpatialAirVis() {
           <tbody>
             {avgData.map((row, index) => (
               <tr
-                key={Symbol(index).toString()}
+                key={row.location}
                 className={index % 2 === 1 ? 'bg-gray-200' : ''}>
-                {Object.values(row).map((value, colIndex) => (
-                  <td
-                    key={Symbol(colIndex).toString()}
-                    className='border border-gray-400 px-4 py-2'>
+                {Object.values(row).map(value => (
+                  <td key={value} className='border border-gray-400 px-4 py-2'>
                     {value}
                   </td>
                 ))}
