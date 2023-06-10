@@ -8,7 +8,7 @@ interface WindRoseChartProps {
 
 function WindRoseChart({ chartData }: WindRoseChartProps) {
   return (
-    <div className='m-4 flex '>
+    <div className='m-4 flex'>
       {chartData && (
         <div className='ml-auto mr-auto'>
           <Chart

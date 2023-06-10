@@ -44,7 +44,7 @@ function WindRoseForm({ setChartData }: WindRoseFormProps) {
     // }catch {
     //   setIsError(true);
     // }
-    setChartData(data);
+    setChartData(data as ChartData[]);
   };
 
   if (isError) {
