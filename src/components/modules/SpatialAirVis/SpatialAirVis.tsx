@@ -1,48 +1,64 @@
+import axios from 'axios';
 import { format } from 'date-fns';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import data from '@/mocks/avg-data.json';
+import { BACKEND_URL_BASE } from '@/config';
 import { type AirQuality } from '@/types/models/AirQuality';
 
 type FormValues = {
-  dateFrom: string;
-  dateTo: string;
+  end: string;
+  start: string;
 };
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 
-const initialAirQuality: AirQuality = {
-  location: '',
-  CO: 0,
-  NO2: 0,
-  O3: 0,
-  PM10: 0,
-  PM25: 0,
-  SO2: 0
-};
+const tableHeaders = ['location', 'CO', 'NO2', 'O3', 'PM10', 'PM25', 'SO2'];
 
 function SpatialAirVis() {
   const { register, handleSubmit, formState } = useForm<FormValues>({
     defaultValues: {
-      dateTo: format(Date.now(), DATE_FORMAT),
-      dateFrom: format(Date.now(), DATE_FORMAT)
+      start: format(Date.now(), DATE_FORMAT),
+      end: format(Date.now(), DATE_FORMAT)
     }
   });
 
   const [avgData, setAvgData] = useState<AirQuality[]>([]);
   const [submitted, setSubmitted] = useState(false);
-
+  const [isError, setIsError] = useState(false);
   const { errors } = formState;
 
-  useEffect(() => {
-    setAvgData(data);
-  }, []);
-
-  const onSubmit = (): void => {
-    // TODO: Fetch data from API and update chartData
+  const onSubmit = async (formData: FormValues) => {
+    try {
+      const { data } = await axios.get<AirQuality[]>(
+        `${BACKEND_URL_BASE}/data/average`,
+        {
+          params: formData,
+          paramsSerializer: { indexes: null }
+        }
+      );
+      console.log(data);
+      setAvgData(data);
+    } catch {
+      setIsError(true);
+    }
     setSubmitted(true);
   };
+
+  if (isError) {
+    return (
+      <div className='text-center'>
+        <p>Błąd połączenia z serwerem</p>
+        <button
+          className='bg-slate-300 rounded m-1 p-2'
+          onClick={() => {
+            setIsError(false);
+          }}>
+          Spróbuj ponownie
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -58,10 +74,10 @@ function SpatialAirVis() {
           <p className='text-gray-700 font-bold mb-2'>Date from</p>
           <input
             type='date'
-            {...register('dateFrom')}
+            {...register('start')}
             className='form-input w-full'
           />
-          {errors.dateFrom && (
+          {errors.end && (
             <span className='text-red-500'>Start date is required</span>
           )}
         </div>
@@ -69,10 +85,10 @@ function SpatialAirVis() {
           <p className='text-gray-700 font-bold mb-2'>Date to</p>
           <input
             type='date'
-            {...register('dateTo')}
+            {...register('end')}
             className='form-input w-full'
           />
-          {errors.dateTo && (
+          {errors.start && (
             <span className='text-red-500'>End date is required</span>
           )}
         </div>
@@ -86,9 +102,9 @@ function SpatialAirVis() {
         <table className='w-full border border-collapse'>
           <thead>
             <tr>
-              {Object.keys(initialAirQuality).map(key => (
-                <th key={key} className='border border-gray-400 px-4 py-2'>
-                  {key}
+              {tableHeaders.map(header => (
+                <th key={header} className='border border-gray-400 px-4 py-2'>
+                  {header}
                 </th>
               ))}
             </tr>
@@ -98,9 +114,10 @@ function SpatialAirVis() {
               <tr
                 key={row.location}
                 className={index % 2 === 1 ? 'bg-gray-200' : ''}>
-                {Object.values(row).map(value => (
-                  <td key={value} className='border border-gray-400 px-4 py-2'>
-                    {value}
+                {tableHeaders.map(header => (
+                  // eslint-disable-next-line
+                  <td className='border border-gray-400 px-4 py-2'>
+                    {row[header]}
                   </td>
                 ))}
               </tr>
