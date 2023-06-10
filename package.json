@@ -80,5 +80,9 @@
       "eslint --fix",
       "prettier --write --ignore-unknown"
     ]
-  }
+  },
+  "bundleDependencies": [
+    "react-icons/fa",
+    "react-icons/bs"
+  ]
 }
