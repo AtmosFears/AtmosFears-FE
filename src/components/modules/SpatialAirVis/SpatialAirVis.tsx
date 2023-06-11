@@ -115,7 +115,6 @@ function SpatialAirVis() {
                 key={row.location}
                 className={index % 2 === 1 ? 'bg-gray-200' : ''}>
                 {tableHeaders.map(header => (
-                  // eslint-disable-next-line
                   <td className='border border-gray-400 px-4 py-2'>
                     {row[header]}
                   </td>
