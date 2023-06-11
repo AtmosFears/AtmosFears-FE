@@ -29,6 +29,7 @@ function SpatialAirVis() {
   const { errors } = formState;
 
   const onSubmit = async (formData: FormValues) => {
+    setAvgData([]);
     try {
       const { data } = await axios.get<AirQuality[]>(
         `${BACKEND_URL_BASE}/data/average`,
@@ -37,7 +38,6 @@ function SpatialAirVis() {
           paramsSerializer: { indexes: null }
         }
       );
-      console.log(data);
       setAvgData(data);
     } catch {
       setIsError(true);
