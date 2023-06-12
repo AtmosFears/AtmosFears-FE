@@ -14,7 +14,7 @@ function WindRose() {
       </div>
       <div className='basis-3/4'>
         <h1 className='text-lg text-center font-black'>Wind Roses View</h1>
-        {chartData.length && <WindRoseChart chartData={chartData} />}
+        {chartData.length > 0 && <WindRoseChart chartData={chartData} />}
       </div>
     </div>
   );

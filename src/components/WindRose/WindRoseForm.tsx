@@ -1,19 +1,20 @@
+import axios from 'axios';
 import { format } from 'date-fns';
 import { type Dispatch, type SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { type ChartData } from 'react-windrose-chart';
 
+import { BACKEND_URL_BASE } from '@/config';
 import { pollutionTypes } from '@/constants/pollution';
-import data from '@/mocks/windrose/data.json';
 
 interface WindRoseFormProps {
   setChartData: Dispatch<SetStateAction<ChartData[]>>;
 }
 
 type WindRoseFormData = {
-  dateFrom: string;
-  dateTo: string;
-  pollution: string;
+  start: string;
+  end: string;
+  pollutant: string;
 };
 
 const DATE_FORMAT = 'yyyy-MM-dd';
@@ -23,28 +24,26 @@ function WindRoseForm({ setChartData }: WindRoseFormProps) {
 
   const { register, handleSubmit } = useForm<WindRoseFormData>({
     defaultValues: {
-      dateFrom: format(new Date('2021-01-01'), DATE_FORMAT),
-      dateTo: format(new Date('2021-01-30'), DATE_FORMAT),
-      pollution: 'PM25'
+      start: format(new Date('2021-01-01'), DATE_FORMAT),
+      end: format(new Date('2021-01-30'), DATE_FORMAT),
+      pollutant: 'PM25'
     }
   });
 
-  // eslint-disable-next-line
   const fetchData = async (formData: WindRoseFormData): Promise<void> => {
-    // @TODO replace with backend real data
-    // setChartData(null);
-    // try {
-    // const { data } = await axios.get<ChartData[]>(
-    //   `${BACKEND_URL}/windrose/data`,
-    //   {
-    //     params: formData,
-    //     paramsSerializer: { indexes: null }
-    //   }
-    // );
-    // }catch {
-    //   setIsError(true);
-    // }
-    setChartData(data as ChartData[]);
+    try {
+      const { data } = await axios.get<ChartData[]>(
+        `${BACKEND_URL_BASE}/data/windrose/aggr`,
+        {
+          params: formData,
+          paramsSerializer: { indexes: null }
+        }
+      );
+      setChartData(data);
+      setIsError(false);
+    } catch {
+      setIsError(true);
+    }
   };
 
   if (isError) {
@@ -71,11 +70,11 @@ function WindRoseForm({ setChartData }: WindRoseFormProps) {
         className='flex flex-col items-center justify-center m-1'>
         {isError && <p>Something went wrong</p>}
         <p className='mt-2 text-lg'>Date from</p>
-        <input type='date' {...register('dateFrom')} />
+        <input type='date' {...register('start')} />
         <p className='mt-2 text-lg'>Date to</p>
-        <input type='date' {...register('dateTo')} />
+        <input type='date' {...register('end')} />
         <p className='mt-2 text-lg'>Pollution types</p>
-        <select {...register('pollution', { required: true })}>
+        <select {...register('pollutant', { required: true })}>
           {pollutionTypes.map(({ value, label }) => (
             <option value={value} key={value}>
               {label}
