@@ -2,14 +2,11 @@ import { format } from 'date-fns';
 import { useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
 
-type FormValues = {
-  date: string;
-  dateType: 'day' | 'month' | 'year';
-  pollutionType: 'CO' | 'NO2' | 'PM10' | 'PM25' | 'O3' | 'SO2';
-};
-
-const DATE_FORMAT = 'yyyy-MM-dd';
-const pollutionTypes = ['CO', 'NO2', 'PM10', 'PM25', 'O3', 'SO2'];
+import {
+  DATE_FORMAT,
+  type FormValues,
+  pollutionTypes
+} from '@/types/models/MapFormValue';
 
 export function SensorForm() {
   const { register, formState } = useForm<FormValues>({
@@ -21,9 +18,6 @@ export function SensorForm() {
   });
 
   const { errors } = formState;
-  // const onSubmit: SubmitHandler<FormValues> = (data) => {
-
-  // } TODO handle submit when endpoint will be ready to use
 
   return (
     <StyledSensorForm>
@@ -71,7 +65,6 @@ export function SensorForm() {
           </label>
         </PollutionTypePicker>
       </InputsContainer>
-
       <input type='submit' value='filter' />
     </StyledSensorForm>
   );
@@ -93,15 +86,15 @@ const InputsContainer = styled.div`
 `;
 
 const DatePickerForm = styled.div`
-  flex: 1 1 0px;
+  flex: 1 1 0;
 `;
 
 const DateTypePicker = styled.div`
   background: white;
-  flex: 1 1 0px;
+  flex: 1 1 0;
 `;
 
 const PollutionTypePicker = styled.div`
   background: white;
-  flex: 1 1 0px;
+  flex: 1 1 0;
 `;
