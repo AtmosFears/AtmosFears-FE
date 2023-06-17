@@ -38,6 +38,7 @@
     "multiline-ternary": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "react/jsx-props-no-spreading": "off",
+    "no-console": ["error", { "allow": ["warn", "error"] }],
     "@typescript-eslint/space-before-function-paren": [
       "error",
       { "anonymous": "always", "named": "never", "asyncArrow": "always" }

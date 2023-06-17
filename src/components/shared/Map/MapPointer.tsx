@@ -3,11 +3,9 @@ import { useRef } from 'react';
 import { Circle, Marker, Popup } from 'react-leaflet';
 
 import { COLORS, POLLUTION } from '@/constants/index';
-import { type SensorData } from '@/types/models/SensorData';
+import { type SensorData } from '@/types/models/sensors';
 
 import PointerPopup from './PointerPopup';
-
-type PollutionType = 'PM2.5' | 'PM10';
 
 interface MapPointerProps {
   center: [number, number];
@@ -18,7 +16,7 @@ interface MapPointerProps {
 
 function getPollutionScaleColor(
   sensorData: SensorData,
-  pollutionName: PollutionType
+  pollutionName: 'PM25' | 'PM10'
 ): string {
   const pollutionValue = sensorData.data.find(
     item => item.name === pollutionName

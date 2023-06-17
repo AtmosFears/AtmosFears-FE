@@ -1,42 +1,47 @@
 import 'leaflet/dist/leaflet.css';
+import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
+import { useSearchParams } from 'react-router-dom';
 
-import Legend from './Legend';
+import {
+  getMeasurements,
+  getRecentMeasurements
+} from '@/services/data.service';
+import { type SensorData } from '@/types/models/sensors';
+
 import MapPointer from './MapPointer';
+import { SensorForm } from './SensorForm';
 
 export default function Map() {
+  const [params] = useSearchParams();
+  const [sensorsWithLocations, setSensorsWithLocations] = useState<
+    SensorData[]
+  >([]);
+  useEffect(() => {
+    void getRecentMeasurements().then(async measurements => {
+      setSensorsWithLocations(measurements);
+    });
+    const dateType = params.get('dateType');
+    if (params) {
+      void getMeasurements(dateType ?? 'day').then(async measurements => {
+        setSensorsWithLocations(measurements);
+      });
+    }
+  }, [params]);
+
   return (
-    <div className='h-full'>
-      <Legend />
-      <MapContainer
-        center={[50.05, 19.93]}
-        zoom={12.5}
-        className='w-full h-full z-0'>
-        <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+    <MapContainer center={[50.05, 19.93]} zoom={12.5} className='w-full h-full'>
+      <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+      <SensorForm />
+      {sensorsWithLocations.map(sensorWithLocation => (
         <MapPointer
-          center={[50.05, 19.93]}
+          key={sensorWithLocation.code}
+          center={[sensorWithLocation.latitude, sensorWithLocation.longitude]}
           radius={20}
           text='21'
-          sensorData={{
-            date: new Date(),
-            name: 'Kraków, ul. Wrocławska 20',
-            data: [
-              {
-                name: 'PM1',
-                value: 21
-              },
-              {
-                name: 'PM2.5',
-                value: 21
-              },
-              {
-                name: 'PM10',
-                value: 0.003
-              }
-            ]
-          }}
+          sensorData={sensorWithLocation}
         />
-      </MapContainer>
-    </div>
+      ))}
+    </MapContainer>
   );
 }

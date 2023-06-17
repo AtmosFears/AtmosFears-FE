@@ -1,4 +1,4 @@
-import { type SensorData } from '@/types/models/SensorData';
+import { type SensorData } from '@/types/models/sensors';
 
 interface PointerPopupProps {
   sensorData: SensorData;
@@ -7,7 +7,7 @@ interface PointerPopupProps {
 export default function PointerPopup({ sensorData }: PointerPopupProps) {
   return (
     <div className='text-center'>
-      <h3 className='text-xl font-bold'>{sensorData.name}</h3>
+      <h3 className='text-xl font-bold'>{sensorData.code}</h3>
       <h4 className='text-left text-l font-bold'>
         {sensorData.date.toLocaleDateString()}{' '}
         {sensorData.date.toLocaleTimeString()}
