@@ -1,17 +1,11 @@
 import axios from 'axios';
 
+import { API } from '@/config';
 import { type MeasurementsResponse } from '@/types/api/measurements';
-import { type SensorData } from '@/types/sensors/sensors';
+import { type AirImpurityData, type SensorData } from '@/types/models/sensors';
 
-const recentMeasurementsURI = `${
-  import.meta.env.VITE_LOCAL_API as string
-}/data/recent`;
-const measurementsURI = `${
-  import.meta.env.VITE_LOCAL_API as string
-}/data/sensors/average`;
-
-function prepareData(apiResult) {
-  return apiResult.data.map(value => ({
+const createSensorData = (data: MeasurementsResponse): SensorData[] =>
+  data.map(value => ({
     code: value.sensorCode,
     date: new Date(value.date),
     longitude: value.longitude,
@@ -42,14 +36,13 @@ function prepareData(apiResult) {
         name: 'SO2',
         value: value.so2
       }
-    ]
+    ].filter(v => v.value !== undefined) as AirImpurityData[]
   }));
-}
 
 export const getRecentMeasurements = async (): Promise<SensorData[]> => {
   try {
-    const res = await axios.get<MeasurementsResponse>(recentMeasurementsURI);
-    return prepareData(res);
+    const res = await axios.get<MeasurementsResponse>(API.recentMeasurements);
+    return createSensorData(res.data);
   } catch (error) {
     console.error(error);
   }
@@ -60,9 +53,9 @@ export const getMeasurements = async (
   format: string
 ): Promise<SensorData[]> => {
   try {
-    const url = `${measurementsURI}?format=${format}`;
+    const url = `${API.averageMeasurements}?format=${format}`;
     const res = await axios.get<MeasurementsResponse>(url);
-    return prepareData(res);
+    return createSensorData(res.data);
   } catch (error) {
     console.error(error);
   }

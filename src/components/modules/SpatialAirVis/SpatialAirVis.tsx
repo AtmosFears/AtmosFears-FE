@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { BACKEND_URL_BASE } from '@/config';
+import { API } from '@/config';
 import { type AirQuality } from '@/types/models/AirQuality';
 
 type FormValues = {
@@ -13,7 +13,7 @@ type FormValues = {
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 
-const tableHeaders = ['location', 'CO', 'NO2', 'O3', 'PM10', 'PM25', 'SO2'];
+const TABLE_HEADERS = ['location', 'CO', 'NO2', 'O3', 'PM10', 'PM25', 'SO2'];
 
 function SpatialAirVis() {
   const { register, handleSubmit, formState } = useForm<FormValues>({
@@ -31,13 +31,10 @@ function SpatialAirVis() {
   const onSubmit = async (formData: FormValues) => {
     setAvgData([]);
     try {
-      const { data } = await axios.get<AirQuality[]>(
-        `${BACKEND_URL_BASE}/data/average`,
-        {
-          params: formData,
-          paramsSerializer: { indexes: null }
-        }
-      );
+      const { data } = await axios.get<AirQuality[]>(API.averageData, {
+        params: formData,
+        paramsSerializer: { indexes: null }
+      });
       setAvgData(data);
     } catch {
       setIsError(true);
@@ -102,7 +99,7 @@ function SpatialAirVis() {
         <table className='w-full border border-collapse'>
           <thead>
             <tr>
-              {tableHeaders.map(header => (
+              {TABLE_HEADERS.map(header => (
                 <th key={header} className='border border-gray-400 px-4 py-2'>
                   {header}
                 </th>
@@ -114,7 +111,7 @@ function SpatialAirVis() {
               <tr
                 key={row.location}
                 className={index % 2 === 1 ? 'bg-gray-200' : ''}>
-                {tableHeaders.map(header => (
+                {TABLE_HEADERS.map(header => (
                   <td key={header} className='border border-gray-400 px-4 py-2'>
                     {row[header]}
                   </td>

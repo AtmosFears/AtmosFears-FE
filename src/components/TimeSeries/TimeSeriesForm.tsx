@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { BACKEND_URL } from '@/config';
+import { API } from '@/config';
 import { pollutionTypes } from '@/constants/pollution';
 import type {
   Location,
@@ -41,19 +41,16 @@ function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
 
   const fetchData = async (formData: TimeSeriesFormData): Promise<void> => {
     setChartData(null);
-    const { data } = await axios.get<TimeSeriesResponse>(
-      `${BACKEND_URL}/timeseries/data`,
-      {
-        params: formData,
-        paramsSerializer: { indexes: null }
-      }
-    );
+    const { data } = await axios.get<TimeSeriesResponse>(API.timeSeries, {
+      params: formData,
+      paramsSerializer: { indexes: null }
+    });
     setChartData(data);
   };
 
   useEffect(() => {
     axios
-      .get<LocationResponse>(`${BACKEND_URL}/timeseries/locations`)
+      .get<LocationResponse>(API.timeSeriesLocations)
       .then(({ data: { locations } }) => {
         setLocationsList(locations);
       })

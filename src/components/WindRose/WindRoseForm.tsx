@@ -4,7 +4,7 @@ import { type Dispatch, type SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { type ChartData } from 'react-windrose-chart';
 
-import { BACKEND_URL_BASE } from '@/config';
+import { API } from '@/config';
 import { pollutionTypes } from '@/constants/pollution';
 
 interface WindRoseFormProps {
@@ -32,13 +32,10 @@ function WindRoseForm({ setChartData }: WindRoseFormProps) {
 
   const fetchData = async (formData: WindRoseFormData): Promise<void> => {
     try {
-      const { data } = await axios.get<ChartData[]>(
-        `${BACKEND_URL_BASE}/data/windrose/aggr`,
-        {
-          params: formData,
-          paramsSerializer: { indexes: null }
-        }
-      );
+      const { data } = await axios.get<ChartData[]>(API.aggregateWindrose, {
+        params: formData,
+        paramsSerializer: { indexes: null }
+      });
       setChartData(data);
       setIsError(false);
     } catch {

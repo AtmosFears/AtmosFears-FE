@@ -11,7 +11,7 @@
     "lint:all": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "vitest",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config .prettierrc",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -25,13 +25,9 @@
     "react-hook-form": "^7.43.9",
     "react-icons": "^4.8.0",
     "react-leaflet": "^4.2.1",
-    "react-redux": "^8.0.5",
     "react-router-dom": "^6.11.1",
     "react-windrose-chart": "^0.2.3",
-    "recharts": "^2.5.0",
-    "redux": "^4.2.1",
-    "redux-thunk": "^2.4.2",
-    "styled-components": "^6.0.0-rc.1"
+    "recharts": "^2.5.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -81,9 +77,5 @@
       "eslint --fix",
       "prettier --write --ignore-unknown"
     ]
-  },
-  "bundleDependencies": [
-    "react-icons/fa",
-    "react-icons/bs"
-  ]
+  }
 }
