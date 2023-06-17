@@ -3,8 +3,11 @@ import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { useSearchParams } from 'react-router-dom';
 
-import { getMeasurements, getRecentMeasurements } from '@/services/DataService';
-import { type SensorData } from '@/types/sensors/sensors';
+import {
+  getMeasurements,
+  getRecentMeasurements
+} from '@/services/data.service';
+import { type SensorData } from '@/types/models/sensors';
 
 import MapPointer from './MapPointer';
 import { SensorForm } from './SensorForm';
@@ -18,8 +21,9 @@ export default function Map() {
     void getRecentMeasurements().then(async measurements => {
       setSensorsWithLocations(measurements);
     });
+    const dateType = params.get('dateType');
     if (params) {
-      void getMeasurements(params.get('dateType')).then(async measurements => {
+      void getMeasurements(dateType ?? 'day').then(async measurements => {
         setSensorsWithLocations(measurements);
       });
     }

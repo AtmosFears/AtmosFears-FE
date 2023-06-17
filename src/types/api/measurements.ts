@@ -2,14 +2,16 @@ export interface MeasurementDTO {
   id: string;
   date: string;
   sensorCode: string;
-  CO: number;
-  NO2: number;
-  PM10: number;
-  PM25: number;
-  O3: number;
-  SO2: number;
   windDirection: number;
   windSpeed: number;
+  longitude: number;
+  latitude: number;
+  co?: number;
+  no2?: number;
+  pm10?: number;
+  pm25?: number;
+  o3?: number;
+  so2?: number;
 }
 
 export type MeasurementsResponse = MeasurementDTO[];

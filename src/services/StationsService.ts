@@ -1,12 +1,13 @@
 import axios from 'axios';
 
-const locationsURI = `${import.meta.env.VITE_LOCAL_API as string}/locations`;
+import { API } from '@/config';
+import { type SensorLocation } from '@/types/models/sensors';
 
-export async function getLocations() {
-  const res = await axios.get(locationsURI);
-  if (res.status) {
-    return res.data;
+export const getLocations = async (): Promise<SensorLocation[]> => {
+  try {
+    return (await axios.get<SensorLocation[]>(API.locations)).data;
+  } catch (error) {
+    console.error(error);
   }
-  console.log('Failed to fetch locations.');
   return [];
-}
+};

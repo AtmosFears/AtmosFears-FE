@@ -1,12 +1,16 @@
 import { format } from 'date-fns';
 import { useForm } from 'react-hook-form';
-import { styled } from 'styled-components';
 
-import {
-  DATE_FORMAT,
-  type FormValues,
-  pollutionTypes
-} from '@/types/models/MapFormValue';
+import { type PollutionType } from '@/types/pollution';
+
+export type FormValues = {
+  date: string;
+  dateType: 'day' | 'month' | 'year';
+  pollutionType: PollutionType;
+};
+
+export const DATE_FORMAT = 'yyyy-MM-dd';
+export const POLLUTION_TYPES = ['CO', 'NO2', 'PM10', 'PM25', 'O3', 'SO2'];
 
 export function SensorForm() {
   const { register, formState } = useForm<FormValues>({
@@ -20,9 +24,9 @@ export function SensorForm() {
   const { errors } = formState;
 
   return (
-    <StyledSensorForm>
-      <InputsContainer>
-        <DatePickerForm>
+    <form className='w-[500px] h-24 absolute z-[1000] bg-white flex flex-column justify-center right-0'>
+      <article className='flex'>
+        <section className='flex-1'>
           <label htmlFor='date' className='block text-gray-700 font-bold mb-2'>
             Start Date
             <input
@@ -35,9 +39,9 @@ export function SensorForm() {
           {errors.date && (
             <span className='text-red-500'>Start date is required</span>
           )}
-        </DatePickerForm>
+        </section>
 
-        <DateTypePicker>
+        <section className='bg-white flex-1'>
           <label
             htmlFor='dateType'
             className='block text-gray-700 font-bold mb-2'>
@@ -48,53 +52,24 @@ export function SensorForm() {
               <option value='year'>year</option>
             </select>
           </label>
-        </DateTypePicker>
+        </section>
 
-        <PollutionTypePicker>
+        <section className='bg-white flex-1'>
           <label
             htmlFor='pollutionType'
             className='block text-gray-700 font-bold mb-2'>
             Pollution Type
             <select id='pollutionType' {...register('pollutionType')}>
-              {pollutionTypes.map(pollutionType => (
+              {POLLUTION_TYPES.map(pollutionType => (
                 <option value={pollutionType} key={pollutionType}>
                   {pollutionType}
                 </option>
               ))}
             </select>
           </label>
-        </PollutionTypePicker>
-      </InputsContainer>
+        </section>
+      </article>
       <input type='submit' value='filter' />
-    </StyledSensorForm>
+    </form>
   );
 }
-
-const StyledSensorForm = styled.form`
-  width: 500px;
-  height: 100px;
-  position: absolute;
-  z-index: 1000000;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const InputsContainer = styled.div`
-  display: flex;
-`;
-
-const DatePickerForm = styled.div`
-  flex: 1 1 0;
-`;
-
-const DateTypePicker = styled.div`
-  background: white;
-  flex: 1 1 0;
-`;
-
-const PollutionTypePicker = styled.div`
-  background: white;
-  flex: 1 1 0;
-`;

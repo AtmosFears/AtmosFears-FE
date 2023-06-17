@@ -1,8 +1,20 @@
 export type TimeSeriesData = TimeSeriesResponse | null;
 
 export interface TimeSeriesResponse {
+  leftAxis: AxisConfig;
+  rightAxis?: AxisConfig;
   lines: LineConfig[];
+  stations: string[];
   data: TimeSeriesPoint[];
+}
+export interface TimeSeriesPoint {
+  date: number;
+  displayDate: string;
+  sensors: Record<string, SensorData>;
+}
+
+export interface AxisConfig {
+  label: string;
 }
 
 export interface LineConfig {
@@ -11,19 +23,20 @@ export interface LineConfig {
   yAxisId: 'left-axis' | 'right-axis';
 }
 
-export interface TimeSeriesPoint {
-  date: string;
-  pm1: number;
-  pm25: number;
-  pm10: number;
-  id: number;
+export interface SensorData {
+  CO: number;
+  NO2: number;
+  O3: number;
+  PM10: number;
+  PM25: number;
+  SO2: number;
 }
 
-export interface StationsResponse {
-  stations: Station[];
+export interface LocationResponse {
+  locations: Location[];
 }
 
-export interface Station {
-  id: string;
+export interface Location {
+  code: string;
   name: string;
 }
