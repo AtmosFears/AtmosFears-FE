@@ -1,15 +1,15 @@
 {
-  "stations": [
+  "locations": [
     {
-      "id": "KRK",
+      "code": "KRK",
       "name": "Kraków"
     },
     {
-      "id": "WAW",
+      "code": "WAW",
       "name": "Warszawa"
     },
     {
-      "id": "GDN",
+      "code": "GDN",
       "name": "Gdańsk"
     }
   ]
