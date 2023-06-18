@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { API } from '@/config';
-import { type SensorLocation } from '@/types/models/sensors';
+import { type SensorLocation } from '@/types/sensors';
 
 export const getLocations = async (): Promise<SensorLocation[]> => {
   try {

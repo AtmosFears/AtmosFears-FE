@@ -1,6 +1,6 @@
 import { Chart, type ChartData } from 'react-windrose-chart';
 
-import { windroseColumns } from '@/constants/pollution';
+import { WINDROSE } from '@/constants';
 
 interface WindRoseChartProps {
   chartData: ChartData[];
@@ -13,7 +13,7 @@ function WindRoseChart({ chartData }: WindRoseChartProps) {
         <div className='ml-auto mr-auto'>
           <Chart
             chartData={chartData}
-            columns={windroseColumns}
+            columns={WINDROSE.columns}
             width={600}
             height={600}
             responsive

@@ -1,15 +1,7 @@
-import { COLORS } from '@/constants/index';
+import { COLORS, POLLUTION } from '@/constants/index';
 
 export default function Legend() {
-  const pollutionLevels: string[] = [
-    'Bardzo dobra',
-    'Dobra',
-    'Umiarkowana',
-    'Dostateczna',
-    'Zła',
-    'Bardzo zła',
-    'Niebezpieczna'
-  ];
+  const pollutionLevels = POLLUTION.levels.names;
   const legendData = pollutionLevels.map((level, i) => ({
     id: i,
     color: COLORS.pollutionScale[i],

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { type ChartData } from 'react-windrose-chart';
 
 import { API } from '@/config';
-import { pollutionTypes } from '@/constants/pollution';
+import { POLLUTION } from '@/constants';
 
 interface WindRoseFormProps {
   setChartData: Dispatch<SetStateAction<ChartData[]>>;
@@ -19,7 +19,7 @@ type WindRoseFormData = {
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 
-function WindRoseForm({ setChartData }: WindRoseFormProps) {
+export default function WindRoseForm({ setChartData }: WindRoseFormProps) {
   const [isError, setIsError] = useState<boolean>(false);
 
   const { register, handleSubmit } = useForm<WindRoseFormData>({
@@ -72,7 +72,7 @@ function WindRoseForm({ setChartData }: WindRoseFormProps) {
         <input type='date' {...register('end')} />
         <p className='mt-2 text-lg'>Pollution types</p>
         <select {...register('pollutant', { required: true })}>
-          {pollutionTypes.map(({ value, label }) => (
+          {POLLUTION.types.map(({ value, label }) => (
             <option value={value} key={value}>
               {label}
             </option>
@@ -86,5 +86,3 @@ function WindRoseForm({ setChartData }: WindRoseFormProps) {
     </div>
   );
 }
-
-export default WindRoseForm;
