@@ -8,16 +8,17 @@ import {
   YAxis
 } from 'recharts';
 
-import type { TimeSeriesData } from '@/types/models/timeSeries';
+import { COLORS } from '@/constants';
+import type { TimeSeriesData } from '@/types/timeSeries';
 
 interface TimeSeriesChartProps {
   chartData: TimeSeriesData;
 }
 
-const colors1 = ['#1B5E20', '#4CAF50', '#CDDC39', '#827717'];
-const colors2 = ['#311B92', '#673AB7', '#2196F3', '#0D47A1'];
+export default function TimeSeriesChart({ chartData }: TimeSeriesChartProps) {
+  const { leftAxis: leftAxisColors, rightAxis: rightAxisColors } =
+    COLORS.timeSeriesChart;
 
-function TimeSeriesChart({ chartData }: TimeSeriesChartProps) {
   return (
     <div className='m-4 ml-auto mr-auto'>
       {chartData && (
@@ -28,7 +29,9 @@ function TimeSeriesChart({ chartData }: TimeSeriesChartProps) {
                 type='monotone'
                 dataKey={`sensors.${station}.${line.dataKey}`}
                 stroke={
-                  line.yAxisId === 'left-axis' ? colors1[idx] : colors2[idx]
+                  line.yAxisId === 'left-axis'
+                    ? leftAxisColors[idx]
+                    : rightAxisColors[idx]
                 }
                 yAxisId={line.yAxisId}
                 key={`${station}-${line.dataKey}`}
@@ -59,5 +62,3 @@ function TimeSeriesChart({ chartData }: TimeSeriesChartProps) {
     </div>
   );
 }
-
-export default TimeSeriesChart;

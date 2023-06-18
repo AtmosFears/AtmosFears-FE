@@ -10,7 +10,6 @@
     "typecheck:all": "tsc",
     "lint:all": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "vitest",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config .prettierrc",
     "prepare": "husky install"
   },
@@ -30,9 +29,6 @@
     "recharts": "^2.5.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.4.3",
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
     "@types/leaflet": "^1.9.3",
     "@types/react": "^18.0.28",
@@ -77,9 +73,5 @@
       "eslint --fix",
       "prettier --write --ignore-unknown"
     ]
-  },
-  "bundleDependencies": [
-    "react-icons/fa",
-    "react-icons/bs"
-  ]
+  }
 }

@@ -3,16 +3,16 @@ import { useForm } from 'react-hook-form';
 
 import { type PollutionType } from '@/types/pollution';
 
-export type FormValues = {
+type FormValues = {
   date: string;
   dateType: 'day' | 'month' | 'year';
   pollutionType: PollutionType;
 };
 
-export const DATE_FORMAT = 'yyyy-MM-dd';
-export const POLLUTION_TYPES = ['CO', 'NO2', 'PM10', 'PM25', 'O3', 'SO2'];
+const DATE_FORMAT = 'yyyy-MM-dd';
+const POLLUTION_TYPES = ['CO', 'NO2', 'PM10', 'PM25', 'O3', 'SO2'];
 
-export function SensorForm() {
+export default function SensorForm() {
   const { register, formState } = useForm<FormValues>({
     defaultValues: {
       date: format(Date.now(), DATE_FORMAT),

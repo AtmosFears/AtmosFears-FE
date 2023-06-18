@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { API } from '@/config';
 import { type MeasurementsResponse } from '@/types/api/measurements';
-import { type AirImpurityData, type SensorData } from '@/types/models/sensors';
+import { type AirImpurityData, type SensorData } from '@/types/sensors';
 
 const createSensorData = (data: MeasurementsResponse): SensorData[] =>
   data.map(value => ({

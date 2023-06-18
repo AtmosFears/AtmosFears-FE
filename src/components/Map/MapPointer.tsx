@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { Circle, Marker, Popup } from 'react-leaflet';
 
 import { COLORS, POLLUTION } from '@/constants/index';
-import { type SensorData } from '@/types/models/sensors';
+import { type SensorData } from '@/types/sensors';
 
 import PointerPopup from './PointerPopup';
 
@@ -16,13 +16,13 @@ interface MapPointerProps {
 
 function getPollutionScaleColor(
   sensorData: SensorData,
-  pollutionName: 'PM25' | 'PM10'
+  pollutionName: 'pm25' | 'pm10'
 ): string {
   const pollutionValue = sensorData.data.find(
     item => item.name === pollutionName
   );
   if (pollutionValue !== undefined) {
-    const thresholds = POLLUTION.pollutionLevels[pollutionName];
+    const thresholds = POLLUTION.levels.values[pollutionName];
     const idx = thresholds.findIndex(
       (threshold: number) => pollutionValue.value < threshold
     );
@@ -43,7 +43,8 @@ export default function MapPointer({
     html: text
   });
 
-  const circleColor = getPollutionScaleColor(sensorData, 'PM10');
+  const circleColor = getPollutionScaleColor(sensorData, 'pm10');
+
   return (
     <Circle
       center={center}

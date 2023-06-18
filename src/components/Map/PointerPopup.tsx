@@ -1,4 +1,4 @@
-import { type SensorData } from '@/types/models/sensors';
+import { type SensorData } from '@/types/sensors';
 
 interface PointerPopupProps {
   sensorData: SensorData;
@@ -20,12 +20,10 @@ export default function PointerPopup({ sensorData }: PointerPopupProps) {
           </tr>
         </thead>
         <tbody>
-          {sensorData.data.map(item => (
-            // TODO - add id as key if id comes from API, or leave name if it is unique -
-            // to be determined after we get data from API
-            <tr key={item.name}>
-              <td className='border px-4 py-2'>{item.name}</td>
-              <td className='border px-4 py-2'>{item.value}</td>
+          {sensorData.data.map(({ name, value }) => (
+            <tr key={name}>
+              <td className='border px-4 py-2'>{name}</td>
+              <td className='border px-4 py-2'>{value > 0 ? value : '-'}</td>
             </tr>
           ))}
         </tbody>

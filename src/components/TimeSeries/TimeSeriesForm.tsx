@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { API } from '@/config';
-import { pollutionTypes } from '@/constants/pollution';
+import { POLLUTION } from '@/constants';
 import type {
   Location,
   LocationResponse,
   TimeSeriesResponse
-} from '@/types/models/timeSeries';
+} from '@/types/timeSeries';
+
+const DATE_FORMAT = 'yyyy-MM-dd';
 
 interface TimeSeriesFormProps {
   setChartData: (data: TimeSeriesResponse | null) => void;
@@ -22,8 +24,6 @@ type TimeSeriesFormData = {
   pollution2: string;
   sensors: string;
 };
-
-const DATE_FORMAT = 'yyyy-MM-dd';
 
 function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
   const [sensorsList, setLocationsList] = useState<Location[]>([]);
@@ -79,6 +79,8 @@ function TimeSeriesForm({ setChartData }: TimeSeriesFormProps) {
       </div>
     );
   }
+
+  const pollutionTypes = POLLUTION.types;
 
   return (
     <div>

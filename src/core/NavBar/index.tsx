@@ -1,27 +1,22 @@
 import { useState } from 'react';
-import {
-  MdSensors,
-  MdSettings,
-  MdSettingsInputAntenna,
-  MdSsidChart
-} from 'react-icons/md';
+import { MdAvTimer, MdSensors, MdSsidChart } from 'react-icons/md';
 import { RiMenuFoldLine, RiMenuUnfoldLine } from 'react-icons/ri';
 
-import CustomIcon from '@/components/custom/CustomIcon';
+import CustomIcon from '@/components/shared/CustomIcon';
 
 import ActiveItemIndicator from './ActiveLinkIndicator';
 import NavBarLink from './NavBarLink';
 
 const LINKS = [
   {
-    to: 'map',
+    to: 'spatial-air-vis',
     icon: <MdSensors className='w-8 h-8' />,
-    text: 'Dane pomiarowe'
+    text: 'Odczyty z sensorów'
   },
   {
-    to: 'cal', // TODO - change this endpoint name
-    icon: <MdSettingsInputAntenna className='w-7 h-7' />,
-    text: 'Mod cal' // TODO - change this link text
+    to: 'avg-time-reports',
+    icon: <MdAvTimer className='w-7 h-7' />,
+    text: 'Raporty czasowe'
   },
   {
     to: 'time-series',
@@ -77,14 +72,6 @@ export default function NavBar() {
           </div>
         </div>
       </section>
-      {/* Settings */}
-      <button // TODO - implement settings and uncomment when are ready
-        onClick={() => {
-          console.log('open settings');
-        }}
-        className='w-12 h-12 flex-center mx-4 group'>
-        <MdSettings className='w-8 h-8 text-primaryLight transition-all group-hover:-rotate-180' />
-      </button>
     </nav>
   );
 }
