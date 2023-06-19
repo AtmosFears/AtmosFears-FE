@@ -9,6 +9,7 @@ import { POLLUTION } from '@/constants';
 
 interface WindRoseFormProps {
   setChartData: Dispatch<SetStateAction<ChartData[]>>;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 type WindRoseFormData = {
@@ -19,7 +20,10 @@ type WindRoseFormData = {
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 
-export default function WindRoseForm({ setChartData }: WindRoseFormProps) {
+export default function WindRoseForm({
+  setChartData,
+  setLoading
+}: WindRoseFormProps) {
   const [isError, setIsError] = useState<boolean>(false);
 
   const { register, handleSubmit } = useForm<WindRoseFormData>({
@@ -32,11 +36,13 @@ export default function WindRoseForm({ setChartData }: WindRoseFormProps) {
 
   const fetchData = async (formData: WindRoseFormData): Promise<void> => {
     try {
+      setLoading(true);
       const { data } = await axios.get<ChartData[]>(API.aggregateWindrose, {
         params: formData,
         paramsSerializer: { indexes: null }
       });
       setChartData(data);
+      setLoading(false);
       setIsError(false);
     } catch {
       setIsError(true);
