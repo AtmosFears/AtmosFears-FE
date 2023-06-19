@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { useSearchParams } from 'react-router-dom';
 
+import Legend from '@/components/Map/Legend';
 import MapPointer from '@/components/Map/MapPointer';
 import SensorForm from '@/components/Map/SensorForm';
 import {
@@ -31,12 +32,13 @@ export default function Map() {
   return (
     <MapContainer center={[50.05, 19.93]} zoom={12.5} className='w-full h-full'>
       <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+      <Legend />
       <SensorForm />
       {sensorsWithLocations.map(sensorWithLocation => (
         <MapPointer
           key={sensorWithLocation.code}
           center={[sensorWithLocation.latitude, sensorWithLocation.longitude]}
-          radius={20}
+          radius={200}
           text='21'
           sensorData={sensorWithLocation}
         />

@@ -9,7 +9,7 @@ export default function Legend() {
   }));
 
   return (
-    <div className='absolute top-4 right-4 bg-black bg-opacity-50 rounded z-10'>
+    <div className='absolute bottom-4 right-4 bg-black bg-opacity-50 rounded z-[1000]'>
       <table className='w-40 border-collapse'>
         <thead className='text-white font-bold'>
           <tr>
